@@ -33,7 +33,9 @@ function startGame() {
             let cellNumber = Math.floor(Math.random() * 15) + i * 15 + 1;
             if (!columnNumbers.includes(cellNumber)) {
                 columnNumbers.push(cellNumber);
-                bingoTable.querySelector(`#row-${j + 1}`).querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
+                bingoTable
+                    .querySelector(`#row-${j + 1}`)
+                    .querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
                 j++;
             }
         }
@@ -44,7 +46,10 @@ function startGame() {
     }
     for (let i = 0; i < numbersRemaining.length; i++) {
         let randomIndex = Math.floor(Math.random() * numbersRemaining.length);
-        [numbersRemaining[i], numbersRemaining[randomIndex]] = [numbersRemaining[randomIndex], numbersRemaining[i]];
+        [numbersRemaining[i], numbersRemaining[randomIndex]] = [
+            numbersRemaining[randomIndex],
+            numbersRemaining[i],
+        ];
     }
     setInterval(callNumbers, 3000);
 }
@@ -59,16 +64,19 @@ function callNumbers() {
     }
 }
 function increaseScore(amount) {
-    score += Math.round(amount * comboMultiplier * bingoMultiplier * (1 + streak / 10));
+    score += Math.round(
+        amount * comboMultiplier * bingoMultiplier * (1 + streak / 10)
+    );
 }
 function markCell(y, x) {
     if (numbersCalled.includes(bingoBoard[x - 1][y - 1])) {
         increaseScore(100);
         streak++;
-        bingoTable.querySelector(`#row-${y}`).querySelector(`#cell-${y}-${x}`).innerText = "";
+        bingoTable
+            .querySelector(`#row-${y}`)
+            .querySelector(`#cell-${y}-${x}`).innerText = "";
         scoreText.innerText = score;
-    }
-    else {
+    } else {
         streak = 0;
     }
 }
