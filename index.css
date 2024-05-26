@@ -6,6 +6,7 @@ td {
   table-layout: fixed;
   border: 1px solid black;
 }
+
 * {
   font-family: system-ui, sans-serif;
   font-variant-numeric: tabular-nums;
