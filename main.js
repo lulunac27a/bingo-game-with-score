@@ -51,6 +51,7 @@ function startGame() {
             numbersRemaining[i],
         ];
     }
+    callNumbers();
     setInterval(callNumbers, 3000);
 }
 function callNumbers() {
