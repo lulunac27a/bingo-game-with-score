@@ -2,13 +2,22 @@
 <head>
   <title>Bingo Game with Score</title>
   <h1>Bingo Game with Score</h1>
-  <link href="index.css" />
+  <link rel="stylesheet" href="index.css" />
 </head>
 <body>
   <button id="start-button" onClick="startGame()">Start Game</button><br />
   Score: <br /><span id="score">0</span><br />
   Number Called: <span id="number-called"></span><br />
   <table id="bingo-table">
+    <thead>
+      <tr>
+        <th>B</th>
+        <th>I</th>
+        <th>N</th>
+        <th>G</th>
+        <th>O</th>
+      </tr>
+    </thead>
     <tr id="row-1">
       <td id="cell-1-1" onClick="markCell(1, 1)"></td>
       <td id="cell-1-2" onClick="markCell(1, 2)"></td>
