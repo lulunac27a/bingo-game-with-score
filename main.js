@@ -38,6 +38,7 @@ function startGame() {
                     .querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
                 j++;
             }
+            cellsMarked.push([]);
         }
         bingoBoard.push(columnNumbers);
     }
@@ -70,14 +71,18 @@ function increaseScore(amount) {
     );
 }
 function markCell(y, x) {
-    if (numbersCalled.includes(bingoBoard[x - 1][y - 1])) {
+    if (
+        numbersCalled.includes(bingoBoard[x - 1][y - 1]) &&
+        cellsMarked[x - 1][y - 1] != bingoBoard[x - 1][y - 1]
+    ) {
         increaseScore(100);
         streak++;
         bingoTable
             .querySelector(`#row-${y}`)
             .querySelector(`#cell-${y}-${x}`).innerText = "";
         scoreText.innerText = score;
-    } else {
+        cellsMarked[x - 1][y - 1] = bingoBoard[x - 1][y - 1];
+    } else if (cellsMarked[x - 1][y - 1] == undefined) {
         streak = 0;
     }
 }
