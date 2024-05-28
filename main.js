@@ -75,7 +75,7 @@ function increaseScore(amount) {
 function markCell(y, x) {
     if (
         numbersCalled.includes(bingoBoard[x - 1][y - 1]) &&
-        cellsMarked[x - 1][y - 1] != undefined
+        cellsMarked[x - 1][y - 1] === undefined
     ) {
         increaseScore(100);
         streak++;
@@ -85,7 +85,7 @@ function markCell(y, x) {
         scoreText.innerText = score;
         cellsMarked[x - 1][y - 1] = true;
         checkBingos();
-    } else if (cellsMarked[x - 1][y - 1] == undefined) {
+    } else if (cellsMarked[x - 1][y - 1] === undefined) {
         streak = 0;
     }
 }
@@ -95,41 +95,41 @@ function checkBingos() {
     let diagonalBingos = Array(2).fill(false);
     for (let row = 0; row < 5; row++) {
         if (
-            cellsMarked[row][0] == true &&
-            cellsMarked[row][1] == true &&
-            cellsMarked[row][2] == true &&
-            cellsMarked[row][3] == true &&
-            cellsMarked[row][4] == true
+            cellsMarked[row][0] === true &&
+            cellsMarked[row][1] === true &&
+            cellsMarked[row][2] === true &&
+            cellsMarked[row][3] === true &&
+            cellsMarked[row][4] === true
         ) {
             rowBingos[row] = true;
         }
     }
     for (let column = 0; column < 5; column++) {
         if (
-            cellsMarked[0][column] == true &&
-            cellsMarked[1][column] == true &&
-            cellsMarked[2][column] == true &&
-            cellsMarked[3][column] == true &&
-            cellsMarked[4][column] == true
+            cellsMarked[0][column] === true &&
+            cellsMarked[1][column] === true &&
+            cellsMarked[2][column] === true &&
+            cellsMarked[3][column] === true &&
+            cellsMarked[4][column] === true
         ) {
             columnBingos[column] = true;
         }
     }
     if (
-        cellsMarked[0][0] == true &&
-        cellsMarked[1][1] == true &&
-        cellsMarked[2][2] == true &&
-        cellsMarked[3][3] == true &&
-        cellsMarked[4][4] == true
+        cellsMarked[0][0] === true &&
+        cellsMarked[1][1] === true &&
+        cellsMarked[2][2] === true &&
+        cellsMarked[3][3] === true &&
+        cellsMarked[4][4] === true
     ) {
         diagonalBingos[0] = true;
     }
     if (
-        cellsMarked[0][4] == true &&
-        cellsMarked[1][3] == true &&
-        cellsMarked[2][2] == true &&
-        cellsMarked[3][1] == true &&
-        cellsMarked[4][0] == true
+        cellsMarked[0][4] === true &&
+        cellsMarked[1][3] === true &&
+        cellsMarked[2][2] === true &&
+        cellsMarked[3][1] === true &&
+        cellsMarked[4][0] === true
     ) {
         diagonalBingos[1] = true;
     }
@@ -141,5 +141,5 @@ function checkBingos() {
     bingos =
         rowBingos.filter(Boolean).length +
         columnBingos.filter(Boolean).length +
-        diagonalBingos(Boolean).length;
+        diagonalBingos.filter(Boolean).length;
 }
