@@ -2,6 +2,7 @@ let score;
 let comboMultiplier;
 let bingoMultiplier;
 let bingoBoard;
+let bingos;
 let numbersCalled;
 let numbersRemaining;
 let streak;
@@ -17,6 +18,7 @@ function startGame() {
     score = 0;
     comboMultiplier = 1;
     bingoMultiplier = 1;
+    bingos = 0;
     bingoBoard = [];
     numbersCalled = [];
     numbersRemaining = [];
@@ -38,8 +40,8 @@ function startGame() {
                     .querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
                 j++;
             }
-            cellsMarked.push([]);
         }
+        cellsMarked.push(Array(5).fill(undefined));
         bingoBoard.push(columnNumbers);
     }
     for (let i = 0; i < 75; i++) {
@@ -81,8 +83,59 @@ function markCell(y, x) {
             .querySelector(`#row-${y}`)
             .querySelector(`#cell-${y}-${x}`).innerText = "";
         scoreText.innerText = score;
-        cellsMarked[x - 1][y - 1] = bingoBoard[x - 1][y - 1];
+        cellsMarked[x - 1][y - 1] = true;
+        checkBingos();
     } else if (cellsMarked[x - 1][y - 1] == undefined) {
         streak = 0;
     }
+}
+function checkBingos() {
+    let rowBingos = Array(5).fill(false);
+    let columnBingos = Array(5).fill(false);
+    let diagonalBingos = Array(2).fill(false);
+    for (let row = 0; row < 5; row++) {
+        if (
+            cellsMarked[row][0] == true &&
+            cellsMarked[row][1] == true &&
+            cellsMarked[row][2] == true &&
+            cellsMarked[row][3] == true &&
+            cellsMarked[row][4] == true
+        ) {
+            rowBingos[row] = true;
+        }
+    }
+    for (let column = 0; column < 5; column++) {
+        if (
+            cellsMarked[0][column] == true &&
+            cellsMarked[1][column] == true &&
+            cellsMarked[2][column] == true &&
+            cellsMarked[3][column] == true &&
+            cellsMarked[4][column] == true
+        ) {
+            columnBingos[column] = true;
+        }
+    }
+    if (
+        cellsMarked[0][0] == true &&
+        cellsMarked[1][1] == true &&
+        cellsMarked[2][2] == true &&
+        cellsMarked[3][3] == true &&
+        cellsMarked[4][4] == true
+    ) {
+        diagonalBingos[0] = true;
+    }
+    if (
+        cellsMarked[0][4] == true &&
+        cellsMarked[1][3] == true &&
+        cellsMarked[2][2] == true &&
+        cellsMarked[3][1] == true &&
+        cellsMarked[4][0] == true
+    ) {
+        diagonalBingos[1] = true;
+    }
+    bingoMultiplier =
+        1 +
+        rowBingos.filter(Boolean).length +
+        columnBingos.filter(Boolean).length +
+        diagonalBingos.filter(Boolean).length;
 }
