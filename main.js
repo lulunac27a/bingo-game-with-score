@@ -1,4 +1,5 @@
 let score;
+let calledBonus;
 let comboMultiplier;
 let bingoMultiplier;
 let bingoBoard;
@@ -69,7 +70,7 @@ function callNumbers() {
 }
 function increaseScore(amount) {
     score += Math.round(
-        amount * comboMultiplier * bingoMultiplier * (1 + streak / 10)
+        amount * comboMultiplier * bingoMultiplier * (1 + streak / 10) * calledBonus
     );
 }
 function markCell(y, x) {
@@ -77,6 +78,11 @@ function markCell(y, x) {
         numbersCalled.includes(bingoBoard[x - 1][y - 1]) &&
         cellsMarked[x - 1][y - 1] === undefined
     ) {
+        if (numbersCalled[0] === bingoBoard[x - 1][y - 1]) {
+            calledBonus = 2;
+        } else {
+            calledBonus = 1;
+        }
         increaseScore(100);
         streak++;
         bingoTable
