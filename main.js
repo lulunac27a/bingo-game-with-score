@@ -75,7 +75,7 @@ function increaseScore(amount) {
 function markCell(y, x) {
     if (
         numbersCalled.includes(bingoBoard[x - 1][y - 1]) &&
-        cellsMarked[x - 1][y - 1] != bingoBoard[x - 1][y - 1]
+        cellsMarked[x - 1][y - 1] != undefined
     ) {
         increaseScore(100);
         streak++;
