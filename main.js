@@ -138,4 +138,8 @@ function checkBingos() {
         rowBingos.filter(Boolean).length +
         columnBingos.filter(Boolean).length +
         diagonalBingos.filter(Boolean).length;
+    bingos =
+        rowBingos.filter(Boolean).length +
+        columnBingos.filter(Boolean).length +
+        diagonalBingos(Boolean).length;
 }
