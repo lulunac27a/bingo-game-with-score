@@ -1,6 +1,8 @@
 let score;
 let calledBonus;
+let lastCalled;
 let comboMultiplier;
+let combo;
 let bingoMultiplier;
 let bingoBoard;
 let bingos;
@@ -19,6 +21,7 @@ function startGame() {
     score = 0;
     comboMultiplier = 1;
     bingoMultiplier = 1;
+    combo = 0;
     bingos = 0;
     bingoBoard = [];
     numbersCalled = [];
@@ -80,10 +83,21 @@ function markCell(y, x) {
     ) {
         if (numbersCalled[0] === bingoBoard[x - 1][y - 1]) {
             calledBonus = 2;
+            if (
+                lastCalled === numbersCalled[1] ||
+                (lastCalled === undefined && numbersCalled.length === 1)
+            ) {
+                combo++;
+            } else {
+                combo = 1;
+            }
         } else {
             calledBonus = 1;
+            combo = 1;
         }
+        comboMultiplier = combo;
         increaseScore(100);
+        lastCalled = bingoBoard[x - 1][y - 1];
         streak++;
         bingoTable
             .querySelector(`#row-${y}`)
@@ -93,6 +107,7 @@ function markCell(y, x) {
         checkBingos();
     } else if (cellsMarked[x - 1][y - 1] === undefined) {
         streak = 0;
+        combo = 0;
     }
 }
 function checkBingos() {
