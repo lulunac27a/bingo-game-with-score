@@ -6,6 +6,7 @@ let combo;
 let bingoMultiplier;
 let bingoBoard;
 let bingos;
+let bingoCount;
 let numbersCalled;
 let numbersRemaining;
 let streak;
@@ -23,6 +24,7 @@ function startGame() {
     bingoMultiplier = 1;
     combo = 0;
     bingos = 0;
+    bingoCount = 0;
     bingoBoard = [];
     numbersCalled = [];
     numbersRemaining = [];
@@ -102,9 +104,9 @@ function markCell(y, x) {
         bingoTable
             .querySelector(`#row-${y}`)
             .querySelector(`#cell-${y}-${x}`).innerText = "";
-        scoreText.innerText = score;
         cellsMarked[x - 1][y - 1] = true;
         checkBingos();
+        scoreText.innerText = score;
     } else if (cellsMarked[x - 1][y - 1] === undefined) {
         streak = 0;
         combo = 0;
@@ -163,4 +165,42 @@ function checkBingos() {
         rowBingos.filter(Boolean).length +
         columnBingos.filter(Boolean).length +
         diagonalBingos.filter(Boolean).length;
+    while (bingoCount < bingos) {
+        bingoCount++;
+        switch (bingoCount) {
+            case 1:
+                increaseScore(1000);
+                break;
+            case 2:
+                increaseScore(1250);
+                break;
+            case 3:
+                increaseScore(1500);
+                break;
+            case 4:
+                increaseScore(2000);
+                break;
+            case 5:
+                increaseScore(2500);
+                break;
+            case 6:
+                increaseScore(3000);
+                break;
+            case 7:
+                increaseScore(4000);
+                break;
+            case 8:
+                increaseScore(5000);
+                break;
+            case 9:
+                increaseScore(6000);
+                break;
+            case 10:
+                increaseScore(8000);
+                break;
+            case 12:
+                increaseScore(10000);
+                break;
+        }
+    }
 }
