@@ -33,6 +33,7 @@ function startGame() {
     cellsMarked = [];
     isGameStarted = true;
     isGameEnded = false;
+    scoreText.innerText = 0;
     startButton.disabled = true;
     for (let i = 0; i < 5; i++) {
         let columnNumbers = [];
@@ -107,6 +108,11 @@ function markCell(y, x) {
         cellsMarked[x - 1][y - 1] = true;
         checkBingos();
         scoreText.innerText = score;
+        if (cellsMarked.every((row) => row.every((cell) => cell !== undefined))) {
+            isGameStarted = false;
+            isGameEnded = true;
+            startButton.disabled = false;
+        }
     } else if (cellsMarked[x - 1][y - 1] === undefined) {
         streak = 0;
         combo = 0;
