@@ -4,6 +4,8 @@ let lastCalled;
 let comboMultiplier;
 let combo;
 let bingoMultiplier;
+let timeMultiplier;
+let timeCalled;
 let bingoBoard;
 let bingos;
 let bingoCount;
@@ -22,6 +24,7 @@ function startGame() {
     score = 0;
     comboMultiplier = 1;
     bingoMultiplier = 1;
+    timeMultiplier = 1;
     combo = 0;
     bingos = 0;
     bingoCount = 0;
@@ -71,12 +74,18 @@ function callNumbers() {
             numbersRemaining.shift();
             numbersLeft--;
             numberCalled.innerText = numbersCalled[0];
+            timeCalled = performance.now();
         }
     }
 }
 function increaseScore(amount) {
     score += Math.round(
-        amount * comboMultiplier * bingoMultiplier * (1 + streak / 10) * calledBonus
+        amount *
+        comboMultiplier *
+        bingoMultiplier *
+        timeMultiplier *
+        (1 + streak / 10) *
+        calledBonus
     );
 }
 function markCell(y, x) {
@@ -97,6 +106,13 @@ function markCell(y, x) {
         } else {
             calledBonus = 1;
             combo = 1;
+        }
+        if (calledBonus === 2) {
+            if (performance.now() - timeCalled < 1000) {
+                timeMultiplier = 2;
+            } else {
+                timeMultiplier = 1;
+            }
         }
         comboMultiplier = combo;
         increaseScore(100);
