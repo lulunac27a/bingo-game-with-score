@@ -107,12 +107,10 @@ function markCell(y, x) {
             calledBonus = 1;
             combo = 1;
         }
-        if (calledBonus === 2) {
-            if (performance.now() - timeCalled < 1000) {
-                timeMultiplier = 2;
-            } else {
-                timeMultiplier = 1;
-            }
+        if (calledBonus === 2 && performance.now() - timeCalled < 1000) {
+            timeMultiplier = 2;
+        } else {
+            timeMultiplier = 1;
         }
         comboMultiplier = combo;
         increaseScore(100);
