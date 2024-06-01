@@ -117,12 +117,12 @@ function markCell(y, x) {
         comboMultiplier = combo;
         increaseScore(100);
         lastCalled = bingoBoard[x - 1][y - 1];
-        streak++;
         bingoTable
             .querySelector(`#row-${y}`)
             .querySelector(`#cell-${y}-${x}`).innerText = "";
         cellsMarked[x - 1][y - 1] = true;
         checkBingos();
+        streak++;
         scoreText.innerText = score;
         if (cellsMarked.every((row) => row.every((cell) => cell !== undefined))) {
             isGameStarted = false;
