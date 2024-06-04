@@ -3,6 +3,7 @@ let calledBonus;
 let lastCalled;
 let comboMultiplier;
 let combo;
+let timeCombo;
 let bingoMultiplier;
 let timeMultiplier;
 let timeCalled;
@@ -26,6 +27,7 @@ function startGame() {
     bingoMultiplier = 1;
     timeMultiplier = 1;
     combo = 0;
+    timeCombo = 0;
     bingos = 0;
     bingoCount = 0;
     bingoBoard = [];
@@ -85,7 +87,8 @@ function increaseScore(amount) {
         bingoMultiplier *
         timeMultiplier *
         (1 + streak / 10) *
-        calledBonus
+        calledBonus *
+        (1 + timeCombo / 10)
     );
 }
 function markCell(y, x) {
@@ -111,6 +114,11 @@ function markCell(y, x) {
             timeMultiplier = 2;
         } else {
             timeMultiplier = 1;
+        }
+        if (calledBonus === 2) {
+            timeCombo++;
+        } else {
+            timeCombo = 0;
         }
         comboMultiplier = combo;
         cellsMarked[x - 1][y - 1] = true;
