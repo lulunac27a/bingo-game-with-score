@@ -415,7 +415,7 @@ function markCell(y, x) {
             .querySelector(`#cell-${y}-${x}`).innerText = ""; //mark the cell on the bingo board
         checkBingos(); //check for bingos
         streak++; //increase streak
-        scoreText.innerText = score.toLocaleString("en-US"); //update score
+        scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as thousand seperator
         if (cellsMarked.every((row) => row.every((cell) => cell !== undefined))) {
             //if all cells are marked end the game
             isGameStarted = false; //set is game started to false
