@@ -82,7 +82,7 @@ function callNumbers() {
             numbersRemaining.shift();
             numbersLeft--;
             numberCalled.innerText = numbersCalled[0];
-            timeCalled = performance.now(); //set time caled to current performance time
+            timeCalled = performance.now(); //set time called to current performance time
         }
     }
 }
@@ -96,7 +96,7 @@ function increaseScore(amount) {
         (1 + streak / 10) *
         calledBonus *
         (1 + timeCombo / 10)
-    );
+    ); //round the score to nearest integer
 }
 function markCell(y, x) {
     //mark cell on specified cell position
