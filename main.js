@@ -393,7 +393,7 @@ function markCell(y, x) {
             .querySelector(`#cell-${y}-${x}`).innerText = "";
         checkBingos();
         streak++;
-        scoreText.innerText = score;
+        scoreText.innerText = score.toLocaleString("en-US");
         if (cellsMarked.every((row) => row.every((cell) => cell !== undefined))) {
             isGameStarted = false;
             isGameEnded = true;
