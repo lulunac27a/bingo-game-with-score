@@ -45,7 +45,9 @@ function startGame() {
             let cellNumber = Math.floor(Math.random() * 15) + i * 15 + 1;
             if (!columnNumbers.includes(cellNumber)) {
                 columnNumbers.push(cellNumber);
-                bingoTable.querySelector(`#row-${j + 1}`).querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
+                bingoTable
+                    .querySelector(`#row-${j + 1}`)
+                    .querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
                 j++;
             }
         }
@@ -57,7 +59,10 @@ function startGame() {
     }
     for (let i = 0; i < numbersRemaining.length; i++) {
         let randomIndex = Math.floor(Math.random() * numbersRemaining.length);
-        [numbersRemaining[i], numbersRemaining[randomIndex]] = [numbersRemaining[randomIndex], numbersRemaining[i]];
+        [numbersRemaining[i], numbersRemaining[randomIndex]] = [
+            numbersRemaining[randomIndex],
+            numbersRemaining[i],
+        ];
     }
     callNumbers();
     setInterval(callNumbers, 3000);
@@ -74,27 +79,37 @@ function callNumbers() {
     }
 }
 function increaseScore(amount) {
-    score += Math.round(amount * comboMultiplier * bingoMultiplier * timeMultiplier * (1 + streak / 10) * calledBonus);
+    score += Math.round(
+        amount *
+        comboMultiplier *
+        bingoMultiplier *
+        timeMultiplier *
+        (1 + streak / 10) *
+        calledBonus
+    );
 }
 function markCell(y, x) {
-    if (numbersCalled.includes(bingoBoard[x - 1][y - 1]) && cellsMarked[x - 1][y - 1] === undefined) {
+    if (
+        numbersCalled.includes(bingoBoard[x - 1][y - 1]) &&
+        cellsMarked[x - 1][y - 1] === undefined
+    ) {
         if (numbersCalled[0] === bingoBoard[x - 1][y - 1]) {
             calledBonus = 2;
-            if ((lastCalled === numbersCalled[1]) || (lastCalled === undefined && numbersCalled.length === 1)) {
+            if (
+                lastCalled === numbersCalled[1] ||
+                (lastCalled === undefined && numbersCalled.length === 1)
+            ) {
                 combo++;
-            }
-            else {
+            } else {
                 combo = 1;
             }
-        }
-        else {
+        } else {
             calledBonus = 1;
             combo = 1;
         }
         if (calledBonus === 2 && performance.now() - timeCalled < 1000) {
             timeMultiplier = 2;
-        }
-        else {
+        } else {
             timeMultiplier = 1;
         }
         comboMultiplier = combo;
@@ -102,152 +117,281 @@ function markCell(y, x) {
         lastCalled = bingoBoard[x - 1][y - 1];
         for (let row = 0; row < 5; row++) {
             for (let column = 0; column < 4; column++) {
-                if (cellsMarked[row][column] === true && cellsMarked[row][column + 1] === true) {
-                    if (lastCalled === bingoBoard[row][column] || lastCalled === bingoBoard[row][column + 1]) {
+                if (
+                    cellsMarked[row][column] === true &&
+                    cellsMarked[row][column + 1] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[row][column] ||
+                        lastCalled === bingoBoard[row][column + 1]
+                    ) {
                         increaseScore(125);
-                    }
-                    else {
+                    } else {
                         increaseScore(5);
                     }
                 }
-                if (cellsMarked[column][row] === true && cellsMarked[column + 1][row] === true) {
-                    if (lastCalled === bingoBoard[column][row] || lastCalled === bingoBoard[column + 1][row]) {
+                if (
+                    cellsMarked[column][row] === true &&
+                    cellsMarked[column + 1][row] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][row] ||
+                        lastCalled === bingoBoard[column + 1][row]
+                    ) {
                         increaseScore(125);
-                    }
-                    else {
+                    } else {
                         increaseScore(5);
                     }
                 }
-                if (cellsMarked[column][column] === true && cellsMarked[column + 1][column + 1] === true) {
-                    if (lastCalled === bingoBoard[column][column] || lastCalled === bingoBoard[column + 1][column + 1]) {
+                if (
+                    cellsMarked[column][column] === true &&
+                    cellsMarked[column + 1][column + 1] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][column] ||
+                        lastCalled === bingoBoard[column + 1][column + 1]
+                    ) {
                         increaseScore(250);
-                    }
-                    else {
+                    } else {
                         increaseScore(10);
                     }
                 }
-                if (cellsMarked[column][4 - column] === true && cellsMarked[column + 1][3 - column] === true) {
-                    if (lastCalled === bingoBoard[column][4 - column] || lastCalled === bingoBoard[column + 1][3 - column]) {
+                if (
+                    cellsMarked[column][4 - column] === true &&
+                    cellsMarked[column + 1][3 - column] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][4 - column] ||
+                        lastCalled === bingoBoard[column + 1][3 - column]
+                    ) {
                         increaseScore(250);
-                    }
-                    else {
+                    } else {
                         increaseScore(10);
                     }
                 }
             }
             for (let column = 0; column < 3; column++) {
-                if ((cellsMarked[row][column] === true && cellsMarked[row][column + 1] === true) && cellsMarked[row][column + 2] === true) {
-                    if ((lastCalled === bingoBoard[row][column] || lastCalled === bingoBoard[row][column + 1]) || lastCalled === bingoBoard[row][column + 2]) {
+                if (
+                    cellsMarked[row][column] === true &&
+                    cellsMarked[row][column + 1] === true &&
+                    cellsMarked[row][column + 2] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[row][column] ||
+                        lastCalled === bingoBoard[row][column + 1] ||
+                        lastCalled === bingoBoard[row][column + 2]
+                    ) {
                         increaseScore(250);
-                    }
-                    else {
+                    } else {
                         increaseScore(10);
                     }
                 }
-                if ((cellsMarked[column][row] === true && cellsMarked[column + 1][row] === true) && cellsMarked[column + 2][row] === true) {
-                    if ((lastCalled === bingoBoard[column][row] || lastCalled === bingoBoard[column + 1][row]) || lastCalled === bingoBoard[column + 2][row]) {
+                if (
+                    cellsMarked[column][row] === true &&
+                    cellsMarked[column + 1][row] === true &&
+                    cellsMarked[column + 2][row] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][row] ||
+                        lastCalled === bingoBoard[column + 1][row] ||
+                        lastCalled === bingoBoard[column + 2][row]
+                    ) {
                         increaseScore(250);
-                    }
-                    else {
+                    } else {
                         increaseScore(10);
                     }
                 }
-                if ((cellsMarked[column][column] === true && cellsMarked[column + 1][column + 1] === true) && cellsMarked[column + 2][column + 2] === true) {
-                    if ((lastCalled === bingoBoard[column][column] || lastCalled === bingoBoard[column + 1][column + 1]) || lastCalled === bingoBoard[column + 2][column + 2]) {
+                if (
+                    cellsMarked[column][column] === true &&
+                    cellsMarked[column + 1][column + 1] === true &&
+                    cellsMarked[column + 2][column + 2] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][column] ||
+                        lastCalled === bingoBoard[column + 1][column + 1] ||
+                        lastCalled === bingoBoard[column + 2][column + 2]
+                    ) {
                         increaseScore(500);
-                    }
-                    else {
+                    } else {
                         increaseScore(20);
                     }
                 }
-                if ((cellsMarked[column][4 - column] === true && cellsMarked[column + 1][3 - column] === true) && cellsMarked[column + 2][2 - column] === true) {
-                    if ((lastCalled === bingoBoard[column][4 - column] || lastCalled === bingoBoard[column + 1][3 - column]) || lastCalled === bingoBoard[column + 2][2 - column]) {
+                if (
+                    cellsMarked[column][4 - column] === true &&
+                    cellsMarked[column + 1][3 - column] === true &&
+                    cellsMarked[column + 2][2 - column] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][4 - column] ||
+                        lastCalled === bingoBoard[column + 1][3 - column] ||
+                        lastCalled === bingoBoard[column + 2][2 - column]
+                    ) {
                         increaseScore(500);
-                    }
-                    else {
+                    } else {
                         increaseScore(20);
                     }
                 }
             }
             for (let column = 0; column < 2; column++) {
-                if ((cellsMarked[row][column] === true && cellsMarked[row][column + 1] === true) && (cellsMarked[row][column + 2] === true && cellsMarked[row][column + 3] === true)) {
-                    if ((lastCalled === bingoBoard[row][column] || lastCalled === bingoBoard[row][column + 1]) || (lastCalled === bingoBoard[row][column + 2] || lastCalled === bingoBoard[row][column + 3])) {
+                if (
+                    cellsMarked[row][column] === true &&
+                    cellsMarked[row][column + 1] === true &&
+                    cellsMarked[row][column + 2] === true &&
+                    cellsMarked[row][column + 3] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[row][column] ||
+                        lastCalled === bingoBoard[row][column + 1] ||
+                        lastCalled === bingoBoard[row][column + 2] ||
+                        lastCalled === bingoBoard[row][column + 3]
+                    ) {
                         increaseScore(500);
-                    }
-                    else {
+                    } else {
                         increaseScore(15);
                     }
                 }
-                if ((cellsMarked[column][row] === true && cellsMarked[column + 1][row] === true) && (cellsMarked[column + 2][row] === true && cellsMarked[column + 3][row] === true)) {
-                    if ((lastCalled === bingoBoard[column][row] || lastCalled === bingoBoard[column + 1][row]) || (lastCalled === bingoBoard[column + 2][row] || lastCalled === bingoBoard[column + 3][row])) {
+                if (
+                    cellsMarked[column][row] === true &&
+                    cellsMarked[column + 1][row] === true &&
+                    cellsMarked[column + 2][row] === true &&
+                    cellsMarked[column + 3][row] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][row] ||
+                        lastCalled === bingoBoard[column + 1][row] ||
+                        lastCalled === bingoBoard[column + 2][row] ||
+                        lastCalled === bingoBoard[column + 3][row]
+                    ) {
                         increaseScore(500);
-                    }
-                    else {
+                    } else {
                         increaseScore(15);
                     }
                 }
-                if ((cellsMarked[column][column] === true && cellsMarked[column + 1][column + 1] === true) && (cellsMarked[column + 2][column + 2] === true && cellsMarked[column + 3][column + 3] === true)) {
-                    if ((lastCalled === bingoBoard[column][column] || lastCalled === bingoBoard[column + 1][column + 1]) || (lastCalled === bingoBoard[column + 2][column + 2] || lastCalled === bingoBoard[column + 3][column + 3])) {
+                if (
+                    cellsMarked[column][column] === true &&
+                    cellsMarked[column + 1][column + 1] === true &&
+                    cellsMarked[column + 2][column + 2] === true &&
+                    cellsMarked[column + 3][column + 3] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][column] ||
+                        lastCalled === bingoBoard[column + 1][column + 1] ||
+                        lastCalled === bingoBoard[column + 2][column + 2] ||
+                        lastCalled === bingoBoard[column + 3][column + 3]
+                    ) {
                         increaseScore(1000);
-                    }
-                    else {
+                    } else {
                         increaseScore(30);
                     }
                 }
-                if ((cellsMarked[column][4 - column] === true && cellsMarked[column + 1][3 - column] === true) && (cellsMarked[column + 2][2 - column] === true && cellsMarked[column + 3][1 - column] === true)) {
-                    if ((lastCalled === bingoBoard[column][4 - column] || lastCalled === bingoBoard[column + 1][3 - column]) || (lastCalled === bingoBoard[column + 2][2 - column] || lastCalled === bingoBoard[column + 3][1 - column])) {
+                if (
+                    cellsMarked[column][4 - column] === true &&
+                    cellsMarked[column + 1][3 - column] === true &&
+                    cellsMarked[column + 2][2 - column] === true &&
+                    cellsMarked[column + 3][1 - column] === true
+                ) {
+                    if (
+                        lastCalled === bingoBoard[column][4 - column] ||
+                        lastCalled === bingoBoard[column + 1][3 - column] ||
+                        lastCalled === bingoBoard[column + 2][2 - column] ||
+                        lastCalled === bingoBoard[column + 3][1 - column]
+                    ) {
                         increaseScore(1000);
-                    }
-                    else {
+                    } else {
                         increaseScore(30);
                     }
                 }
             }
-            if (((cellsMarked[row][0] === true && cellsMarked[row][1] === true) && (cellsMarked[row][2] === true && cellsMarked[row][3] === true)) && cellsMarked[row][4] === true) {
-                if (((lastCalled === bingoBoard[row][0] || lastCalled === bingoBoard[row][1]) || (lastCalled === bingoBoard[row][2] || lastCalled === bingoBoard[row][3])) || lastCalled === bingoBoard[row][4]) {
+            if (
+                cellsMarked[row][0] === true &&
+                cellsMarked[row][1] === true &&
+                cellsMarked[row][2] === true &&
+                cellsMarked[row][3] === true &&
+                cellsMarked[row][4] === true
+            ) {
+                if (
+                    lastCalled === bingoBoard[row][0] ||
+                    lastCalled === bingoBoard[row][1] ||
+                    lastCalled === bingoBoard[row][2] ||
+                    lastCalled === bingoBoard[row][3] ||
+                    lastCalled === bingoBoard[row][4]
+                ) {
                     increaseScore(1000);
-                }
-                else {
+                } else {
                     increaseScore(20);
                 }
             }
-            if (((cellsMarked[0][row] === true && cellsMarked[1][row] === true) && (cellsMarked[2][row] === true && cellsMarked[3][row] === true)) && cellsMarked[4][row] === true) {
-                if (((lastCalled === bingoBoard[0][row] || lastCalled === bingoBoard[1][row]) || (lastCalled === bingoBoard[2][row] || lastCalled === bingoBoard[3][row])) || lastCalled === bingoBoard[4][row]) {
+            if (
+                cellsMarked[0][row] === true &&
+                cellsMarked[1][row] === true &&
+                cellsMarked[2][row] === true &&
+                cellsMarked[3][row] === true &&
+                cellsMarked[4][row] === true
+            ) {
+                if (
+                    lastCalled === bingoBoard[0][row] ||
+                    lastCalled === bingoBoard[1][row] ||
+                    lastCalled === bingoBoard[2][row] ||
+                    lastCalled === bingoBoard[3][row] ||
+                    lastCalled === bingoBoard[4][row]
+                ) {
                     increaseScore(1000);
-                }
-                else {
+                } else {
                     increaseScore(20);
                 }
             }
-            if (((cellsMarked[0][0] === true && cellsMarked[1][1] === true) && (cellsMarked[2][2] === true && cellsMarked[3][3] === true)) && cellsMarked[4][4] === true) {
-                if (((lastCalled === bingoBoard[0][0] || lastCalled === bingoBoard[1][1]) || (lastCalled === bingoBoard[2][2] || lastCalled === bingoBoard[3][3])) || lastCalled === bingoBoard[4][4]) {
+            if (
+                cellsMarked[0][0] === true &&
+                cellsMarked[1][1] === true &&
+                cellsMarked[2][2] === true &&
+                cellsMarked[3][3] === true &&
+                cellsMarked[4][4] === true
+            ) {
+                if (
+                    lastCalled === bingoBoard[0][0] ||
+                    lastCalled === bingoBoard[1][1] ||
+                    lastCalled === bingoBoard[2][2] ||
+                    lastCalled === bingoBoard[3][3] ||
+                    lastCalled === bingoBoard[4][4]
+                ) {
                     increaseScore(2000);
-                }
-                else {
+                } else {
                     increaseScore(40);
                 }
             }
-            if (((cellsMarked[0][4] === true && cellsMarked[1][3] === true) && (cellsMarked[2][2] === true && cellsMarked[3][1] === true)) && cellsMarked[4][0] === true) {
-                if (((lastCalled === bingoBoard[0][4] || lastCalled === bingoBoard[1][3]) || (lastCalled === bingoBoard[2][2] || lastCalled === bingoBoard[3][1])) || lastCalled === bingoBoard[4][0]) {
+            if (
+                cellsMarked[0][4] === true &&
+                cellsMarked[1][3] === true &&
+                cellsMarked[2][2] === true &&
+                cellsMarked[3][1] === true &&
+                cellsMarked[4][0] === true
+            ) {
+                if (
+                    lastCalled === bingoBoard[0][4] ||
+                    lastCalled === bingoBoard[1][3] ||
+                    lastCalled === bingoBoard[2][2] ||
+                    lastCalled === bingoBoard[3][1] ||
+                    lastCalled === bingoBoard[4][0]
+                ) {
                     increaseScore(2000);
-                }
-                else {
+                } else {
                     increaseScore(40);
                 }
             }
         }
         increaseScore(100);
-        bingoTable.querySelector(`#row-${y}`).querySelector(`#cell-${y}-${x}`).innerText = "";
+        bingoTable
+            .querySelector(`#row-${y}`)
+            .querySelector(`#cell-${y}-${x}`).innerText = "";
         checkBingos();
         streak++;
         scoreText.innerText = score;
-        if (cellsMarked.every(row => row.every(cell => cell !== undefined))) {
+        if (cellsMarked.every((row) => row.every((cell) => cell !== undefined))) {
             isGameStarted = false;
             isGameEnded = true;
             startButton.disabled = false;
         }
-    }
-    else if (cellsMarked[x - 1][y - 1] === undefined) {
+    } else if (cellsMarked[x - 1][y - 1] === undefined) {
         streak = 0;
         combo = 0;
     }
@@ -257,23 +401,54 @@ function checkBingos() {
     let columnBingos = Array(5).fill(false);
     let diagonalBingos = Array(2).fill(false);
     for (let row = 0; row < 5; row++) {
-        if (cellsMarked[row][0] === true && cellsMarked[row][1] === true && cellsMarked[row][2] === true && cellsMarked[row][3] === true && cellsMarked[row][4] === true) {
+        if (
+            cellsMarked[row][0] === true &&
+            cellsMarked[row][1] === true &&
+            cellsMarked[row][2] === true &&
+            cellsMarked[row][3] === true &&
+            cellsMarked[row][4] === true
+        ) {
             rowBingos[row] = true;
         }
     }
     for (let column = 0; column < 5; column++) {
-        if (cellsMarked[0][column] === true && cellsMarked[1][column] === true && cellsMarked[2][column] === true && cellsMarked[3][column] === true && cellsMarked[4][column] === true) {
+        if (
+            cellsMarked[0][column] === true &&
+            cellsMarked[1][column] === true &&
+            cellsMarked[2][column] === true &&
+            cellsMarked[3][column] === true &&
+            cellsMarked[4][column] === true
+        ) {
             columnBingos[column] = true;
         }
     }
-    if (cellsMarked[0][0] === true && cellsMarked[1][1] === true && cellsMarked[2][2] === true && cellsMarked[3][3] === true && cellsMarked[4][4] === true) {
+    if (
+        cellsMarked[0][0] === true &&
+        cellsMarked[1][1] === true &&
+        cellsMarked[2][2] === true &&
+        cellsMarked[3][3] === true &&
+        cellsMarked[4][4] === true
+    ) {
         diagonalBingos[0] = true;
     }
-    if (cellsMarked[0][4] === true && cellsMarked[1][3] === true && cellsMarked[2][2] === true && cellsMarked[3][1] === true && cellsMarked[4][0] === true) {
+    if (
+        cellsMarked[0][4] === true &&
+        cellsMarked[1][3] === true &&
+        cellsMarked[2][2] === true &&
+        cellsMarked[3][1] === true &&
+        cellsMarked[4][0] === true
+    ) {
         diagonalBingos[1] = true;
     }
-    bingoMultiplier = 1 + rowBingos.filter(Boolean).length + columnBingos.filter(Boolean).length + diagonalBingos.filter(Boolean).length;
-    bingos = rowBingos.filter(Boolean).length + columnBingos.filter(Boolean).length + diagonalBingos.filter(Boolean).length;
+    bingoMultiplier =
+        1 +
+        rowBingos.filter(Boolean).length +
+        columnBingos.filter(Boolean).length +
+        diagonalBingos.filter(Boolean).length;
+    bingos =
+        rowBingos.filter(Boolean).length +
+        columnBingos.filter(Boolean).length +
+        diagonalBingos.filter(Boolean).length;
     while (bingoCount < bingos) {
         bingoCount++;
         switch (bingoCount) {
@@ -310,9 +485,6 @@ function checkBingos() {
             case 12:
                 increaseScore(10000);
                 break;
-
         }
-
     }
 }
-
