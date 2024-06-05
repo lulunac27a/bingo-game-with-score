@@ -1,6 +1,9 @@
 let score; //game score
 let calledBonus; //bonus for marking while calling number
+let callTime = 3000; //time to call numbers
+let timeBonus = 1000; //bonus for marking quickly before time bonus
 let lastCalled; //last called number
+let difficultyMultiplier = 1; //score multiplier
 let comboMultiplier; //combo multiplier
 let combo; //combo
 let timeCombo; //combo for marking a cell with last number called
@@ -21,6 +24,26 @@ let startButton = document.getElementById("start-button"); //start button
 let bingoTable = document.getElementById("bingo-table"); //bingo table
 let scoreText = document.getElementById("score"); //score text
 let numberCalled = document.getElementById("number-called"); //number called text
+function setDifficulty(difficulty) {
+    //set game difficulty
+    switch (difficulty) {
+        case "easy": //easy difficulty
+            callTime = 3000; //call numbers every 3 seconds
+            difficultyMultiplier = 1; //no score increase
+            timeBonus = 1000; //bonus score for marking within a second
+            break;
+        case "medium": //medium difficulty
+            callTime = 2000; //call unmbers every 2 seconds
+            difficultyMultiplier = 1.5; //increase score by 50 percent
+            timeBonus = 750; //bonus score for marking within 750 milliseconds
+            break;
+        case "hard": //hard difficulty
+            callTime = 1000; //call numbers every second
+            difficultyMultiplier = 2; //double the score
+            timeBonus = 500; //bonus score for marking within 500 milliseconds
+            break;
+    }
+}
 function startGame() {
     //when start button is clicked
     score = 0; //set score to 0
@@ -72,7 +95,7 @@ function startGame() {
         ]; //shuffle the numbers remaining array
     }
     callNumbers(); //call numbers
-    setInterval(callNumbers, 3000); //repeat every 3 seconds
+    setInterval(callNumbers, callTime); //repeat every few seconds based on difficulty
 }
 function callNumbers() {
     if (isGameStarted && !isGameEnded) {
@@ -80,7 +103,7 @@ function callNumbers() {
             //if there are numbers left to call
             numbersCalled.unshift(numbersRemaining[0]);
             numbersRemaining.shift();
-            numbersLeft--;
+            numbersLeft--; //decrease numbers left to call
             numberCalled.innerText = numbersCalled[0];
             timeCalled = performance.now(); //set time called to current performance time
         }
@@ -95,7 +118,8 @@ function increaseScore(amount) {
         timeMultiplier *
         (1 + streak / 10) *
         calledBonus *
-        (1 + timeCombo / 10)
+        (1 + timeCombo / 10) *
+        difficultyMultiplier
     ); //round the score to nearest integer
 }
 function markCell(y, x) {
@@ -121,8 +145,8 @@ function markCell(y, x) {
             calledBonus = 1; //reset called bonus to 1
             combo = 1; //reset combo to 1
         }
-        if (calledBonus === 2 && performance.now() - timeCalled < 1000) {
-            //check if time since last number called is less than a second
+        if (calledBonus === 2 && performance.now() - timeCalled < timeBonus) {
+            //check if time since last number called is less than specified time bonus based on difficulty
             timeMultiplier = 2; //double the time multiplier
         } else {
             timeMultiplier = 1; //reset time multiplier to 1

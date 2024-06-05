@@ -5,6 +5,26 @@
   <link rel="stylesheet" href="index.css" />
 </head>
 <body>
+  Difficulty:<br />
+  <input
+    type="radio"
+    name="difficulty"
+    value="Easy"
+    checked
+    onclick="setDifficulty('easy')"
+  /><label for="easy">Easy</label><br />
+  <input
+    type="radio"
+    name="difficulty"
+    value="Medium"
+    onclick="setDifficulty('medium')"
+  /><label for="medium">Medium</label><br />
+  <input
+    type="radio"
+    name="difficulty"
+    value="Hard"
+    onclick="setDifficulty('hard')"
+  /><label for="hard">Hard</label><br />
   <button id="start-button" onClick="startGame()">Start Game</button><br />
   Score: <br /><span id="score">0</span><br />
   Number Called: <span id="number-called"></span><br />
