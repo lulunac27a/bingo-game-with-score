@@ -13,6 +13,8 @@ let timeCalled; //time variable since last number called
 let bingoBoard; //bingo board
 let bingos; //number of bingos
 let bingoCount; //count number of bingos made
+let lastBingoCount; //last count number of bingo made before marking a cell
+let bingosMadeMultiplier; //number of bingos made score multiplier
 let numbersCalled; //list of numbers called
 let numbersRemaining; //list of numbers remaining to call
 let streak; //current marked cell streak
@@ -54,6 +56,8 @@ function startGame() {
     timeCombo = 0; //set time combo to 0
     bingos = 0; //set bingos to 0
     bingoCount = 0; //set bingo count to 0
+    lastBingoCount = 0; //set last bingo count to 0
+    bingosMadeMultiplier = 1; //set bingo made multiplier to 1
     bingoBoard = []; //set bingo board to empty array
     numbersCalled = []; //set numbers called to empty array
     numbersRemaining = []; //set numbers remaining to empty array
@@ -104,7 +108,7 @@ function callNumbers() {
             numbersCalled.unshift(numbersRemaining[0]);
             numbersRemaining.shift();
             numbersLeft--; //decrease numbers left to call
-            numberCalled.innerText = numbersCalled[0];
+            numberCalled.innerText = numbersCalled[0]; //update number called text to last number called
             timeCalled = performance.now(); //set time called to current performance time
         }
     }
@@ -453,6 +457,7 @@ function markCell(y, x) {
     }
 }
 function checkBingos() {
+    lastBingoCount = bingos;
     let rowBingos = Array(5).fill(false); //bingo rows
     let columnBingos = Array(5).fill(false); //bingo columns
     let diagonalBingos = Array(2).fill(false); //bingo diagonals
@@ -508,6 +513,7 @@ function checkBingos() {
         rowBingos.filter(Boolean).length +
         columnBingos.filter(Boolean).length +
         diagonalBingos.filter(Boolean).length;
+    bingosMadeMultiplier = Math.max(1, bingos - lastBingoCount); //calculate number of bingos made when cell is marked
     while (bingoCount < bingos) {
         //loop for bingo count to make sure to increase score once for each bingo
         bingoCount++;
