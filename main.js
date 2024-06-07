@@ -26,6 +26,9 @@ let startButton = document.getElementById("start-button"); //start button
 let bingoTable = document.getElementById("bingo-table"); //bingo table
 let scoreText = document.getElementById("score"); //score text
 let numberCalled = document.getElementById("number-called"); //number called text
+let easyButton = document.getElementById("easy"); //easy difficulty button
+let mediumButton = document.getElementById("medium"); //medium difficulty button
+let hardButton = document.getElementById("hard"); //hard difficulty button
 function setDifficulty(difficulty) {
     //set game difficulty
     switch (difficulty) {
@@ -68,6 +71,9 @@ function startGame() {
     isGameEnded = false; //set is game ended to false
     scoreText.innerText = 0; //set score text to 0
     startButton.disabled = true; //disable start button
+    easyButton.disabled = true; //disable easy difficulty button
+    mediumButton.disabled = true; //disable medium difficulty button
+    hardButton.disabled = true; //disable hard difficulty button
     for (let i = 0; i < 5; i++) {
         //repeat for each row in bingo board
         let columnNumbers = [];
@@ -449,6 +455,9 @@ function markCell(y, x) {
             isGameStarted = false; //set is game started to false
             isGameEnded = true; //set is game ended to true
             startButton.disabled = false; //enable the start button
+            easyButton.disabled = false; //enable easy difficulty button
+            mediumButton.disabled = false; //enable medium difficulty button
+            hardButton.disabled = false; //enable hard difficulty button
         }
     } else if (cellsMarked[x - 1][y - 1] === undefined) {
         //reset streak and combo if cell is clicked when number is not called yet
