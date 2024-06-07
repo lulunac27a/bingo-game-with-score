@@ -161,7 +161,7 @@ function markCell(y, x) {
             timeCombo = 0; //reset time combo
         }
         comboMultiplier = combo;
-        cellsMarked[x - 1][y - 1] = true;
+        cellsMarked[x - 1][y - 1] = true; //mark the cell
         lastCalled = bingoBoard[x - 1][y - 1];
         for (let row = 0; row < 5; row++) {
             //repeat for each row
@@ -179,7 +179,7 @@ function markCell(y, x) {
                         //check if last called number is one of cells marked
                         increaseScore(125); //increase a lot of points
                     } else {
-                        increaseScore(5); //increase a little bit of points
+                        increaseScore(5); //else increase a little bit of points
                     }
                 }
                 if (
@@ -522,7 +522,7 @@ function checkBingos() {
                 increaseScore(1000); //increase score for each bingo
                 break;
             case 2:
-                increaseScore(1250);
+                increaseScore(1250); //increase even more points for more bingos
                 break;
             case 3:
                 increaseScore(1500);
