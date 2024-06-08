@@ -1,3 +1,8 @@
 # Bingo Game with Score Multipliers
 
-This web app is a bingo game with score multipliers for making streaks and making bingos.
+This web app is a bingo game with score multipliers for making streaks and making bingos. It have various score multipliers, like making a bingo increases the score multiplier and get a lot of points, marking the cell quickly when the number is called will get bonus points and changing to higher difficulty will call numbers faster, but gets more points.
+
+# Features 
+
+- Various score multipliers
+- 3 difficulty modes: Easy, Medium and Hard
