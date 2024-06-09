@@ -129,6 +129,13 @@ const game = () => {
                 numbersLeft--; //decrease numbers left to call
                 numberCalled.innerText = numbersCalled[0]; //update number called text to last number called
                 timeCalled = performance.now(); //set time called to current performance time
+            } else {
+                isGameStarted = false; //set is game started to false
+                isGameEnded = true; //set is game ended to true
+                startButton.disabled = false; //enable the start button
+                easyButton.disabled = false; //enable easy difficulty button
+                mediumButton.disabled = false; //enable medium difficulty button
+                hardButton.disabled = false; //enable hard difficulty button
             }
         }
     }
@@ -147,335 +154,340 @@ const game = () => {
     }
     function markCell(y, x) {
         //mark cell on specified cell position
-        if (
-            numbersCalled.includes(bingoBoard[x - 1][y - 1]) &&
-            cellsMarked[x - 1][y - 1] === undefined
-        ) {
-            //check if numbers called is part of bingo board and cell is not marked
-            if (numbersCalled[0] === bingoBoard[x - 1][y - 1]) {
-                //check if current number called is in the bingo board
-                calledBonus = 2; //double the called bonus
-                if (
-                    lastCalled === numbersCalled[1] ||
-                    (lastCalled === undefined && numbersCalled.length === 1)
-                ) {
-                    //check if last marked number is marked or if cell marked on first number called
-                    combo++; //increase combo
+        if (isGameStarted && !isGameEnded) {
+            //check if game is started and not ended
+            if (
+                numbersCalled.includes(bingoBoard[x - 1][y - 1]) &&
+                cellsMarked[x - 1][y - 1] === undefined
+            ) {
+                //check if numbers called is part of bingo board and cell is not marked
+                if (numbersCalled[0] === bingoBoard[x - 1][y - 1]) {
+                    //check if current number called is in the bingo board
+                    calledBonus = 2; //double the called bonus
+                    if (
+                        lastCalled === numbersCalled[1] ||
+                        (lastCalled === undefined && numbersCalled.length === 1)
+                    ) {
+                        //check if last marked number is marked or if cell marked on first number called
+                        combo++; //increase combo
+                    } else {
+                        combo = 1; //reset combo to 1
+                    }
                 } else {
+                    calledBonus = 1; //reset called bonus to 1
                     combo = 1; //reset combo to 1
                 }
-            } else {
-                calledBonus = 1; //reset called bonus to 1
-                combo = 1; //reset combo to 1
-            }
-            if (calledBonus === 2 && performance.now() - timeCalled < timeBonus) {
-                //check if time since last number called is less than specified time bonus based on difficulty
-                timeMultiplier = 2; //double the time multiplier
-            } else {
-                timeMultiplier = 1; //reset time multiplier to 1
-            }
-            if (calledBonus === 2) {
-                timeCombo++; //increase time combo
-            } else {
-                timeCombo = 0; //reset time combo
-            }
-            comboMultiplier = combo;
-            cellsMarked[x - 1][y - 1] = true; //mark the cell
-            lastCalled = bingoBoard[x - 1][y - 1];
-            for (let row = 0; row < 5; row++) {
-                //repeat for each row
-                for (let column = 0; column < 4; column++) {
-                    //check for 2 in a row
-                    if (
-                        cellsMarked[row][column] === true &&
-                        cellsMarked[row][column + 1] === true
-                    ) {
-                        //check for each column
-                        if (
-                            lastCalled === bingoBoard[row][column] ||
-                            lastCalled === bingoBoard[row][column + 1]
-                        ) {
-                            //check if last called number is one of cells marked
-                            increaseScore(125); //increase a lot of points
-                        } else {
-                            increaseScore(5); //else increase a little bit of points
-                        }
-                    }
-                    if (
-                        cellsMarked[column][row] === true &&
-                        cellsMarked[column + 1][row] === true
-                    ) {
-                        //check for each row
-                        if (
-                            lastCalled === bingoBoard[column][row] ||
-                            lastCalled === bingoBoard[column + 1][row]
-                        ) {
-                            increaseScore(125);
-                        } else {
-                            increaseScore(5);
-                        }
-                    }
-                    if (
-                        cellsMarked[column][column] === true &&
-                        cellsMarked[column + 1][column + 1] === true
-                    ) {
-                        //check for top-left to bottom-right diagonal
-                        if (
-                            lastCalled === bingoBoard[column][column] ||
-                            lastCalled === bingoBoard[column + 1][column + 1]
-                        ) {
-                            increaseScore(250); //increase double points for diagonals
-                        } else {
-                            increaseScore(10);
-                        }
-                    }
-                    if (
-                        cellsMarked[column][4 - column] === true &&
-                        cellsMarked[column + 1][3 - column] === true
-                    ) {
-                        //check for top-right to bottom-left diagonal
-                        if (
-                            lastCalled === bingoBoard[column][4 - column] ||
-                            lastCalled === bingoBoard[column + 1][3 - column]
-                        ) {
-                            increaseScore(250);
-                        } else {
-                            increaseScore(10);
-                        }
-                    }
+                if (calledBonus === 2 && performance.now() - timeCalled < timeBonus) {
+                    //check if time since last number called is less than specified time bonus based on difficulty
+                    timeMultiplier = 2; //double the time multiplier
+                } else {
+                    timeMultiplier = 1; //reset time multiplier to 1
                 }
-                for (let column = 0; column < 3; column++) {
-                    //check for 3 in a row
-                    if (
-                        cellsMarked[row][column] === true &&
-                        cellsMarked[row][column + 1] === true &&
-                        cellsMarked[row][column + 2] === true
-                    ) {
+                if (calledBonus === 2) {
+                    timeCombo++; //increase time combo
+                } else {
+                    timeCombo = 0; //reset time combo
+                }
+                comboMultiplier = combo;
+                cellsMarked[x - 1][y - 1] = true; //mark the cell
+                lastCalled = bingoBoard[x - 1][y - 1];
+                for (let row = 0; row < 5; row++) {
+                    //repeat for each row
+                    for (let column = 0; column < 4; column++) {
+                        //check for 2 in a row
                         if (
-                            lastCalled === bingoBoard[row][column] ||
-                            lastCalled === bingoBoard[row][column + 1] ||
-                            lastCalled === bingoBoard[row][column + 2]
+                            cellsMarked[row][column] === true &&
+                            cellsMarked[row][column + 1] === true
                         ) {
-                            increaseScore(250);
-                        } else {
-                            increaseScore(10);
+                            //check for each column
+                            if (
+                                lastCalled === bingoBoard[row][column] ||
+                                lastCalled === bingoBoard[row][column + 1]
+                            ) {
+                                //check if last called number is one of cells marked
+                                increaseScore(125); //increase a lot of points
+                            } else {
+                                increaseScore(5); //else increase a little bit of points
+                            }
+                        }
+                        if (
+                            cellsMarked[column][row] === true &&
+                            cellsMarked[column + 1][row] === true
+                        ) {
+                            //check for each row
+                            if (
+                                lastCalled === bingoBoard[column][row] ||
+                                lastCalled === bingoBoard[column + 1][row]
+                            ) {
+                                increaseScore(125);
+                            } else {
+                                increaseScore(5);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][column] === true &&
+                            cellsMarked[column + 1][column + 1] === true
+                        ) {
+                            //check for top-left to bottom-right diagonal
+                            if (
+                                lastCalled === bingoBoard[column][column] ||
+                                lastCalled === bingoBoard[column + 1][column + 1]
+                            ) {
+                                increaseScore(250); //increase double points for diagonals
+                            } else {
+                                increaseScore(10);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][4 - column] === true &&
+                            cellsMarked[column + 1][3 - column] === true
+                        ) {
+                            //check for top-right to bottom-left diagonal
+                            if (
+                                lastCalled === bingoBoard[column][4 - column] ||
+                                lastCalled === bingoBoard[column + 1][3 - column]
+                            ) {
+                                increaseScore(250);
+                            } else {
+                                increaseScore(10);
+                            }
                         }
                     }
-                    if (
-                        cellsMarked[column][row] === true &&
-                        cellsMarked[column + 1][row] === true &&
-                        cellsMarked[column + 2][row] === true
-                    ) {
+                    for (let column = 0; column < 3; column++) {
+                        //check for 3 in a row
                         if (
-                            lastCalled === bingoBoard[column][row] ||
-                            lastCalled === bingoBoard[column + 1][row] ||
-                            lastCalled === bingoBoard[column + 2][row]
+                            cellsMarked[row][column] === true &&
+                            cellsMarked[row][column + 1] === true &&
+                            cellsMarked[row][column + 2] === true
                         ) {
-                            increaseScore(250);
-                        } else {
-                            increaseScore(10);
+                            if (
+                                lastCalled === bingoBoard[row][column] ||
+                                lastCalled === bingoBoard[row][column + 1] ||
+                                lastCalled === bingoBoard[row][column + 2]
+                            ) {
+                                increaseScore(250);
+                            } else {
+                                increaseScore(10);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][row] === true &&
+                            cellsMarked[column + 1][row] === true &&
+                            cellsMarked[column + 2][row] === true
+                        ) {
+                            if (
+                                lastCalled === bingoBoard[column][row] ||
+                                lastCalled === bingoBoard[column + 1][row] ||
+                                lastCalled === bingoBoard[column + 2][row]
+                            ) {
+                                increaseScore(250);
+                            } else {
+                                increaseScore(10);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][column] === true &&
+                            cellsMarked[column + 1][column + 1] === true &&
+                            cellsMarked[column + 2][column + 2] === true
+                        ) {
+                            if (
+                                lastCalled === bingoBoard[column][column] ||
+                                lastCalled === bingoBoard[column + 1][column + 1] ||
+                                lastCalled === bingoBoard[column + 2][column + 2]
+                            ) {
+                                increaseScore(500);
+                            } else {
+                                increaseScore(20);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][4 - column] === true &&
+                            cellsMarked[column + 1][3 - column] === true &&
+                            cellsMarked[column + 2][2 - column] === true
+                        ) {
+                            if (
+                                lastCalled === bingoBoard[column][4 - column] ||
+                                lastCalled === bingoBoard[column + 1][3 - column] ||
+                                lastCalled === bingoBoard[column + 2][2 - column]
+                            ) {
+                                increaseScore(500);
+                            } else {
+                                increaseScore(20);
+                            }
                         }
                     }
+                    for (let column = 0; column < 2; column++) {
+                        //check for 4 in a row
+                        if (
+                            cellsMarked[row][column] === true &&
+                            cellsMarked[row][column + 1] === true &&
+                            cellsMarked[row][column + 2] === true &&
+                            cellsMarked[row][column + 3] === true
+                        ) {
+                            if (
+                                lastCalled === bingoBoard[row][column] ||
+                                lastCalled === bingoBoard[row][column + 1] ||
+                                lastCalled === bingoBoard[row][column + 2] ||
+                                lastCalled === bingoBoard[row][column + 3]
+                            ) {
+                                increaseScore(500);
+                            } else {
+                                increaseScore(15);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][row] === true &&
+                            cellsMarked[column + 1][row] === true &&
+                            cellsMarked[column + 2][row] === true &&
+                            cellsMarked[column + 3][row] === true
+                        ) {
+                            if (
+                                lastCalled === bingoBoard[column][row] ||
+                                lastCalled === bingoBoard[column + 1][row] ||
+                                lastCalled === bingoBoard[column + 2][row] ||
+                                lastCalled === bingoBoard[column + 3][row]
+                            ) {
+                                increaseScore(500);
+                            } else {
+                                increaseScore(15);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][column] === true &&
+                            cellsMarked[column + 1][column + 1] === true &&
+                            cellsMarked[column + 2][column + 2] === true &&
+                            cellsMarked[column + 3][column + 3] === true
+                        ) {
+                            if (
+                                lastCalled === bingoBoard[column][column] ||
+                                lastCalled === bingoBoard[column + 1][column + 1] ||
+                                lastCalled === bingoBoard[column + 2][column + 2] ||
+                                lastCalled === bingoBoard[column + 3][column + 3]
+                            ) {
+                                increaseScore(1000);
+                            } else {
+                                increaseScore(30);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][4 - column] === true &&
+                            cellsMarked[column + 1][3 - column] === true &&
+                            cellsMarked[column + 2][2 - column] === true &&
+                            cellsMarked[column + 3][1 - column] === true
+                        ) {
+                            if (
+                                lastCalled === bingoBoard[column][4 - column] ||
+                                lastCalled === bingoBoard[column + 1][3 - column] ||
+                                lastCalled === bingoBoard[column + 2][2 - column] ||
+                                lastCalled === bingoBoard[column + 3][1 - column]
+                            ) {
+                                increaseScore(1000);
+                            } else {
+                                increaseScore(30);
+                            }
+                        }
+                    }
+                    //check for 5 in a row
                     if (
-                        cellsMarked[column][column] === true &&
-                        cellsMarked[column + 1][column + 1] === true &&
-                        cellsMarked[column + 2][column + 2] === true
+                        cellsMarked[row][0] === true &&
+                        cellsMarked[row][1] === true &&
+                        cellsMarked[row][2] === true &&
+                        cellsMarked[row][3] === true &&
+                        cellsMarked[row][4] === true
                     ) {
                         if (
-                            lastCalled === bingoBoard[column][column] ||
-                            lastCalled === bingoBoard[column + 1][column + 1] ||
-                            lastCalled === bingoBoard[column + 2][column + 2]
+                            lastCalled === bingoBoard[row][0] ||
+                            lastCalled === bingoBoard[row][1] ||
+                            lastCalled === bingoBoard[row][2] ||
+                            lastCalled === bingoBoard[row][3] ||
+                            lastCalled === bingoBoard[row][4]
                         ) {
-                            increaseScore(500);
+                            increaseScore(1000);
                         } else {
                             increaseScore(20);
                         }
                     }
                     if (
-                        cellsMarked[column][4 - column] === true &&
-                        cellsMarked[column + 1][3 - column] === true &&
-                        cellsMarked[column + 2][2 - column] === true
+                        cellsMarked[0][row] === true &&
+                        cellsMarked[1][row] === true &&
+                        cellsMarked[2][row] === true &&
+                        cellsMarked[3][row] === true &&
+                        cellsMarked[4][row] === true
                     ) {
                         if (
-                            lastCalled === bingoBoard[column][4 - column] ||
-                            lastCalled === bingoBoard[column + 1][3 - column] ||
-                            lastCalled === bingoBoard[column + 2][2 - column]
+                            lastCalled === bingoBoard[0][row] ||
+                            lastCalled === bingoBoard[1][row] ||
+                            lastCalled === bingoBoard[2][row] ||
+                            lastCalled === bingoBoard[3][row] ||
+                            lastCalled === bingoBoard[4][row]
                         ) {
-                            increaseScore(500);
+                            increaseScore(1000);
                         } else {
                             increaseScore(20);
                         }
                     }
-                }
-                for (let column = 0; column < 2; column++) {
-                    //check for 4 in a row
                     if (
-                        cellsMarked[row][column] === true &&
-                        cellsMarked[row][column + 1] === true &&
-                        cellsMarked[row][column + 2] === true &&
-                        cellsMarked[row][column + 3] === true
+                        cellsMarked[0][0] === true &&
+                        cellsMarked[1][1] === true &&
+                        cellsMarked[2][2] === true &&
+                        cellsMarked[3][3] === true &&
+                        cellsMarked[4][4] === true
                     ) {
                         if (
-                            lastCalled === bingoBoard[row][column] ||
-                            lastCalled === bingoBoard[row][column + 1] ||
-                            lastCalled === bingoBoard[row][column + 2] ||
-                            lastCalled === bingoBoard[row][column + 3]
+                            lastCalled === bingoBoard[0][0] ||
+                            lastCalled === bingoBoard[1][1] ||
+                            lastCalled === bingoBoard[2][2] ||
+                            lastCalled === bingoBoard[3][3] ||
+                            lastCalled === bingoBoard[4][4]
                         ) {
-                            increaseScore(500);
+                            increaseScore(2000);
                         } else {
-                            increaseScore(15);
+                            increaseScore(40);
                         }
                     }
                     if (
-                        cellsMarked[column][row] === true &&
-                        cellsMarked[column + 1][row] === true &&
-                        cellsMarked[column + 2][row] === true &&
-                        cellsMarked[column + 3][row] === true
+                        cellsMarked[0][4] === true &&
+                        cellsMarked[1][3] === true &&
+                        cellsMarked[2][2] === true &&
+                        cellsMarked[3][1] === true &&
+                        cellsMarked[4][0] === true
                     ) {
                         if (
-                            lastCalled === bingoBoard[column][row] ||
-                            lastCalled === bingoBoard[column + 1][row] ||
-                            lastCalled === bingoBoard[column + 2][row] ||
-                            lastCalled === bingoBoard[column + 3][row]
+                            lastCalled === bingoBoard[0][4] ||
+                            lastCalled === bingoBoard[1][3] ||
+                            lastCalled === bingoBoard[2][2] ||
+                            lastCalled === bingoBoard[3][1] ||
+                            lastCalled === bingoBoard[4][0]
                         ) {
-                            increaseScore(500);
+                            increaseScore(2000);
                         } else {
-                            increaseScore(15);
-                        }
-                    }
-                    if (
-                        cellsMarked[column][column] === true &&
-                        cellsMarked[column + 1][column + 1] === true &&
-                        cellsMarked[column + 2][column + 2] === true &&
-                        cellsMarked[column + 3][column + 3] === true
-                    ) {
-                        if (
-                            lastCalled === bingoBoard[column][column] ||
-                            lastCalled === bingoBoard[column + 1][column + 1] ||
-                            lastCalled === bingoBoard[column + 2][column + 2] ||
-                            lastCalled === bingoBoard[column + 3][column + 3]
-                        ) {
-                            increaseScore(1000);
-                        } else {
-                            increaseScore(30);
-                        }
-                    }
-                    if (
-                        cellsMarked[column][4 - column] === true &&
-                        cellsMarked[column + 1][3 - column] === true &&
-                        cellsMarked[column + 2][2 - column] === true &&
-                        cellsMarked[column + 3][1 - column] === true
-                    ) {
-                        if (
-                            lastCalled === bingoBoard[column][4 - column] ||
-                            lastCalled === bingoBoard[column + 1][3 - column] ||
-                            lastCalled === bingoBoard[column + 2][2 - column] ||
-                            lastCalled === bingoBoard[column + 3][1 - column]
-                        ) {
-                            increaseScore(1000);
-                        } else {
-                            increaseScore(30);
+                            increaseScore(40);
                         }
                     }
                 }
-                //check for 5 in a row
+                increaseScore(100); //increase score when cell is marked correctly
+                bingoTable
+                    .querySelector(`#row-${y}`)
+                    .querySelector(`#cell-${y}-${x}`).innerText = ""; //mark the cell on the bingo board
+                checkBingos(); //check for bingos
+                streak++; //increase streak
+                scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as thousand seperator
                 if (
-                    cellsMarked[row][0] === true &&
-                    cellsMarked[row][1] === true &&
-                    cellsMarked[row][2] === true &&
-                    cellsMarked[row][3] === true &&
-                    cellsMarked[row][4] === true
+                    cellsMarked.every((row) => row.every((cell) => cell !== undefined))
                 ) {
-                    if (
-                        lastCalled === bingoBoard[row][0] ||
-                        lastCalled === bingoBoard[row][1] ||
-                        lastCalled === bingoBoard[row][2] ||
-                        lastCalled === bingoBoard[row][3] ||
-                        lastCalled === bingoBoard[row][4]
-                    ) {
-                        increaseScore(1000);
-                    } else {
-                        increaseScore(20);
-                    }
+                    //if all cells are marked end the game
+                    isGameStarted = false; //set is game started to false
+                    isGameEnded = true; //set is game ended to true
+                    startButton.disabled = false; //enable the start button
+                    easyButton.disabled = false; //enable easy difficulty button
+                    mediumButton.disabled = false; //enable medium difficulty button
+                    hardButton.disabled = false; //enable hard difficulty button
                 }
-                if (
-                    cellsMarked[0][row] === true &&
-                    cellsMarked[1][row] === true &&
-                    cellsMarked[2][row] === true &&
-                    cellsMarked[3][row] === true &&
-                    cellsMarked[4][row] === true
-                ) {
-                    if (
-                        lastCalled === bingoBoard[0][row] ||
-                        lastCalled === bingoBoard[1][row] ||
-                        lastCalled === bingoBoard[2][row] ||
-                        lastCalled === bingoBoard[3][row] ||
-                        lastCalled === bingoBoard[4][row]
-                    ) {
-                        increaseScore(1000);
-                    } else {
-                        increaseScore(20);
-                    }
-                }
-                if (
-                    cellsMarked[0][0] === true &&
-                    cellsMarked[1][1] === true &&
-                    cellsMarked[2][2] === true &&
-                    cellsMarked[3][3] === true &&
-                    cellsMarked[4][4] === true
-                ) {
-                    if (
-                        lastCalled === bingoBoard[0][0] ||
-                        lastCalled === bingoBoard[1][1] ||
-                        lastCalled === bingoBoard[2][2] ||
-                        lastCalled === bingoBoard[3][3] ||
-                        lastCalled === bingoBoard[4][4]
-                    ) {
-                        increaseScore(2000);
-                    } else {
-                        increaseScore(40);
-                    }
-                }
-                if (
-                    cellsMarked[0][4] === true &&
-                    cellsMarked[1][3] === true &&
-                    cellsMarked[2][2] === true &&
-                    cellsMarked[3][1] === true &&
-                    cellsMarked[4][0] === true
-                ) {
-                    if (
-                        lastCalled === bingoBoard[0][4] ||
-                        lastCalled === bingoBoard[1][3] ||
-                        lastCalled === bingoBoard[2][2] ||
-                        lastCalled === bingoBoard[3][1] ||
-                        lastCalled === bingoBoard[4][0]
-                    ) {
-                        increaseScore(2000);
-                    } else {
-                        increaseScore(40);
-                    }
-                }
+            } else if (cellsMarked[x - 1][y - 1] === undefined) {
+                //reset streak and combo if cell is clicked when number is not called yet
+                streak = 0;
+                combo = 0;
             }
-            increaseScore(100); //increase score when cell is marked correctly
-            bingoTable
-                .querySelector(`#row-${y}`)
-                .querySelector(`#cell-${y}-${x}`).innerText = ""; //mark the cell on the bingo board
-            checkBingos(); //check for bingos
-            streak++; //increase streak
-            scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as thousand seperator
-            if (cellsMarked.every((row) => row.every((cell) => cell !== undefined))) {
-                //if all cells are marked end the game
-                isGameStarted = false; //set is game started to false
-                isGameEnded = true; //set is game ended to true
-                startButton.disabled = false; //enable the start button
-                easyButton.disabled = false; //enable easy difficulty button
-                mediumButton.disabled = false; //enable medium difficulty button
-                hardButton.disabled = false; //enable hard difficulty button
-            }
-        } else if (cellsMarked[x - 1][y - 1] === undefined) {
-            //reset streak and combo if cell is clicked when number is not called yet
-            streak = 0;
-            combo = 0;
         }
     }
     function checkBingos() {
