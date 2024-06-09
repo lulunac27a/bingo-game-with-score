@@ -14,6 +14,17 @@ const game = () => {
     let bingoBoard; //bingo board
     let bingos; //number of bingos
     let bingoCount; //count number of bingos made
+    let bingo1Count; //number of bingo numbers called for first bingo
+    let bingo2Count; //number of bingo numbers called for second bingo
+    let bingo3Count; //number of bingo numbers called for third bingo
+    let bingo4Count; //number of bingo numbers called for fourth bingo
+    let bingo5Count; //number of bingo numbers called for fifth bingo
+    let bingo6Count; //number of bingo numbers called for sixth bingo
+    let bingo7Count; //number of bingo numbers called for seventh bingo
+    let bingo8Count; //number of bingo numbers called for eighth bingo
+    let bingo9Count; //number of bingo numbers called for ninth bingo
+    let bingo10Count; //number of bingo numbers called for tenth bingo
+    let blackoutBingoCount; //number of bingo numbers called for all cells marked (blackout bingo)
     let lastBingoCount; //last count number of bingo made before marking a cell
     let bingosMadeMultiplier; //number of bingos made score multiplier
     let numbersCalled; //list of numbers called
@@ -72,6 +83,17 @@ const game = () => {
         timeCombo = 0; //set time combo to 0
         bingos = 0; //set bingos to 0
         bingoCount = 0; //set bingo count to 0
+        bingo1Count = 75; //set all numbered bingo count to 75 (all numbers called)
+        bingo2Count = 75;
+        bingo3Count = 75;
+        bingo4Count = 75;
+        bingo5Count = 75;
+        bingo6Count = 75;
+        bingo7Count = 75;
+        bingo8Count = 75;
+        bingo9Count = 75;
+        bingo10Count = 75;
+        blackoutBingoCount = 75;
         lastBingoCount = 0; //set last bingo count to 0
         bingosMadeMultiplier = 1; //set bingo made multiplier to 1
         bingoBoard = []; //set bingo board to empty array
@@ -136,6 +158,17 @@ const game = () => {
                 easyButton.disabled = false; //enable easy difficulty button
                 mediumButton.disabled = false; //enable medium difficulty button
                 hardButton.disabled = false; //enable hard difficulty button
+                increaseScoreBingo(bingo1Count); //get bonus points based on number of bingo numbers called for a bingo
+                increaseScoreBingo(bingo2Count);
+                increaseScoreBingo(bingo3Count);
+                increaseScoreBingo(bingo4Count);
+                increaseScoreBingo(bingo5Count);
+                increaseScoreBingo(bingo6Count);
+                increaseScoreBingo(bingo7Count);
+                increaseScoreBingo(bingo8Count);
+                increaseScoreBingo(bingo9Count);
+                increaseScoreBingo(bingo10Count);
+                increaseScoreBingo(blackoutBingoCount);
             }
         }
     }
@@ -151,6 +184,11 @@ const game = () => {
             (1 + timeCombo / 10) *
             difficultyMultiplier
         ); //round the score to nearest integer
+    }
+    function increaseScoreBingo(bingoNumbersCalled) {
+        //increase score based on number of bingo numbers called
+        score = Math.round((score * 75) / bingoNumbersCalled); //round the score to nearest integer
+        scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as thousand seperator
     }
     function markCell(y, x) {
         //mark cell on specified cell position
@@ -473,15 +511,28 @@ const game = () => {
                 streak++; //increase streak
                 scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as thousand seperator
                 if (
-                    cellsMarked.every((row) => row.every((cell) => cell !== undefined))
+                    cellsMarked.every((row) => row.every((cell) => cell !== undefined)) &&
+                    isGameStarted &&
+                    !isGameEnded
                 ) {
-                    //if all cells are marked end the game
+                    //if all cells are marked and game is started and game is not ended, end the game
                     isGameStarted = false; //set is game started to false
                     isGameEnded = true; //set is game ended to true
                     startButton.disabled = false; //enable the start button
                     easyButton.disabled = false; //enable easy difficulty button
                     mediumButton.disabled = false; //enable medium difficulty button
                     hardButton.disabled = false; //enable hard difficulty button
+                    increaseScoreBingo(bingo1Count); //get bonus points based on number of bingo numbers called for a bingo
+                    increaseScoreBingo(bingo2Count);
+                    increaseScoreBingo(bingo3Count);
+                    increaseScoreBingo(bingo4Count);
+                    increaseScoreBingo(bingo5Count);
+                    increaseScoreBingo(bingo6Count);
+                    increaseScoreBingo(bingo7Count);
+                    increaseScoreBingo(bingo8Count);
+                    increaseScoreBingo(bingo9Count);
+                    increaseScoreBingo(bingo10Count);
+                    increaseScoreBingo(blackoutBingoCount);
                 }
             } else if (cellsMarked[x - 1][y - 1] === undefined) {
                 //reset streak and combo if cell is clicked when number is not called yet
@@ -554,36 +605,47 @@ const game = () => {
             switch (bingoCount) {
                 case 1:
                     increaseScore(1000); //increase score for each bingo
+                    bingo1Count = 75 - numbersLeft; //calculate how many bingo numbers called for first bingo
                     break;
                 case 2:
                     increaseScore(1250); //increase even more points for more bingos
+                    bingo2Count = 75 - numbersLeft;
                     break;
                 case 3:
                     increaseScore(1500);
+                    bingo3Count = 75 - numbersLeft;
                     break;
                 case 4:
                     increaseScore(2000);
+                    bingo4Count = 75 - numbersLeft;
                     break;
                 case 5:
                     increaseScore(2500);
+                    bingo5Count = 75 - numbersLeft;
                     break;
                 case 6:
                     increaseScore(3000);
+                    bingo6Count = 75 - numbersLeft;
                     break;
                 case 7:
                     increaseScore(4000);
+                    bingo7Count = 75 - numbersLeft;
                     break;
                 case 8:
                     increaseScore(5000);
+                    bingo8Count = 75 - numbersLeft;
                     break;
                 case 9:
                     increaseScore(6000);
+                    bingo9Count = 75 - numbersLeft;
                     break;
                 case 10:
                     increaseScore(8000);
+                    bingo10Count = 75 - numbersLeft;
                     break;
                 case 12:
                     increaseScore(10000);
+                    blackoutBingoCount = 75 - numbersLeft;
                     break;
             }
         }
