@@ -182,7 +182,8 @@ const game = () => {
             (1 + streak / 10) *
             calledBonus *
             (1 + timeCombo / 10) *
-            difficultyMultiplier
+            difficultyMultiplier *
+            bingosMadeMultiplier
         ); //round the score to nearest integer
     }
     function increaseScoreBingo(bingoNumbersCalled) {
@@ -284,6 +285,24 @@ const game = () => {
                             if (
                                 lastCalled === bingoBoard[column][4 - column] ||
                                 lastCalled === bingoBoard[column + 1][3 - column]
+                            ) {
+                                increaseScore(250);
+                            } else {
+                                increaseScore(10);
+                            }
+                        }
+                        if (
+                            cellsMarked[column][column] === true &&
+                            cellsMarked[column + 1][column] === true &&
+                            cellsMarked[column][column + 1] === true &&
+                            cellsMarked[column + 1][column + 1] === true
+                        ) {
+                            //check for 2x2 square
+                            if (
+                                (lastCalled === bingoBoard[column][column] ||
+                                    lastCalled === bingoBoard[column + 1][column]) &&
+                                (lastCalled === bingoBoard[column][column + 1] ||
+                                    lastCalled === bingoBoard[column + 1][column + 1])
                             ) {
                                 increaseScore(250);
                             } else {
