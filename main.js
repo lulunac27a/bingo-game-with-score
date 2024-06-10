@@ -291,24 +291,6 @@ const game = () => {
                                 increaseScore(10);
                             }
                         }
-                        if (
-                            cellsMarked[column][column] === true &&
-                            cellsMarked[column + 1][column] === true &&
-                            cellsMarked[column][column + 1] === true &&
-                            cellsMarked[column + 1][column + 1] === true
-                        ) {
-                            //check for 2x2 square
-                            if (
-                                (lastCalled === bingoBoard[column][column] ||
-                                    lastCalled === bingoBoard[column + 1][column]) &&
-                                (lastCalled === bingoBoard[column][column + 1] ||
-                                    lastCalled === bingoBoard[column + 1][column + 1])
-                            ) {
-                                increaseScore(250);
-                            } else {
-                                increaseScore(10);
-                            }
-                        }
                     }
                     for (let column = 0; column < 3; column++) {
                         //check for 3 in a row
