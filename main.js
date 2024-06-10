@@ -64,7 +64,7 @@ const game = () => {
                 timeBonus = 1000; //bonus score for marking within a second
                 break;
             case "medium": //medium difficulty
-                callTime = 2000; //call unmbers every 2 seconds
+                callTime = 2000; //call numbers every 2 seconds
                 difficultyMultiplier = 1.5; //increase score by 50 percent
                 timeBonus = 750; //bonus score for marking within 750 milliseconds
                 break;
@@ -201,7 +201,7 @@ const game = () => {
     function increaseScoreBingo(bingoNumbersCalled) {
         //increase score based on number of bingo numbers called
         score = Math.round((score * 75) / bingoNumbersCalled); //round the score to nearest integer
-        scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as thousand seperator
+        scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
     }
     function markCell(y, x) {
         //mark cell on specified cell position
@@ -522,7 +522,7 @@ const game = () => {
                     .querySelector(`#cell-${y}-${x}`).innerText = ""; //mark the cell on the bingo board
                 checkBingos(); //check for bingos
                 streak++; //increase streak
-                scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as thousand seperator
+                scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
                 if (
                     cellsMarked.every((row) => row.every((cell) => cell !== undefined)) &&
                     isGameStarted &&
