@@ -41,6 +41,8 @@ const game = () => {
     let easyButton = document.getElementById("easy"); //easy difficulty button
     let mediumButton = document.getElementById("medium"); //medium difficulty button
     let hardButton = document.getElementById("hard"); //hard difficulty button
+    let freeSpaceButton = document.getElementById("free-space-button"); //free space button
+    let freeSpaceMultiplier = freeSpaceButton.checked ? 1.25 : 1; //bonus score multiplier for using free space
     startButton.addEventListener("click", startGame);
     easyButton.addEventListener("click", setDifficulty.bind(null, "easy"));
     mediumButton.addEventListener("click", setDifficulty.bind(null, "medium"));
@@ -104,11 +106,13 @@ const game = () => {
         cellsMarked = []; //set cells marked to empty array
         isGameStarted = true; //set is game started to true
         isGameEnded = false; //set is game ended to false
+        freeSpaceMultiplier = freeSpaceButton.checked ? 1.25 : 1; //update bonus free space score multiplier by checking if free space button is checked
         scoreText.innerText = 0; //set score text to 0
         startButton.disabled = true; //disable start button
         easyButton.disabled = true; //disable easy difficulty button
         mediumButton.disabled = true; //disable medium difficulty button
         hardButton.disabled = true; //disable hard difficulty button
+        freeSpaceButton.disabled = true; //disable free space button
         for (let i = 0; i < 5; i++) {
             //repeat for each row in bingo board
             let columnNumbers = [];
@@ -127,6 +131,12 @@ const game = () => {
             }
             cellsMarked.push(Array(5).fill(undefined)); //set cells marked to blank (undefined / not marked)
             bingoBoard.push(columnNumbers); //add column numbers to bingo board
+        }
+        if (freeSpaceButton.checked) {
+            //check if free space button is checked
+            cellsMarked[2][2] = true; //mark the center cell on the free space on the bingo board
+            bingoTable.querySelector("#row-3").querySelector("#cell-3-3").innerText =
+                ""; //update the text
         }
         for (let i = 0; i < 75; i++) {
             numbersRemaining.push(i + 1); //add numbers to numbers remaining
@@ -158,6 +168,7 @@ const game = () => {
                 easyButton.disabled = false; //enable easy difficulty button
                 mediumButton.disabled = false; //enable medium difficulty button
                 hardButton.disabled = false; //enable hard difficulty button
+                freeSpaceButton.disabled = false; //enable free space button
                 increaseScoreBingo(bingo1Count); //get bonus points based on number of bingo numbers called for a bingo
                 increaseScoreBingo(bingo2Count);
                 increaseScoreBingo(bingo3Count);
@@ -183,7 +194,8 @@ const game = () => {
             calledBonus *
             (1 + timeCombo / 10) *
             difficultyMultiplier *
-            bingosMadeMultiplier
+            bingosMadeMultiplier *
+            freeSpaceMultiplier
         ); //round the score to nearest integer
     }
     function increaseScoreBingo(bingoNumbersCalled) {
@@ -523,6 +535,7 @@ const game = () => {
                     easyButton.disabled = false; //enable easy difficulty button
                     mediumButton.disabled = false; //enable medium difficulty button
                     hardButton.disabled = false; //enable hard difficulty button
+                    freeSpaceButton.disabled = false; //enable free space button
                     increaseScoreBingo(bingo1Count); //get bonus points based on number of bingo numbers called for a bingo
                     increaseScoreBingo(bingo2Count);
                     increaseScoreBingo(bingo3Count);
