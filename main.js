@@ -13,7 +13,7 @@ const game = () => {
     let timeCalled; //time variable since last number called
     let bingoBoard; //bingo board
     let bingos; //number of bingos
-    let bingoCount; //count number of bingos made
+    let bingoCount; //count the number of bingos made
     let bingo1Count; //number of bingo numbers called for first bingo
     let bingo2Count; //number of bingo numbers called for second bingo
     let bingo3Count; //number of bingo numbers called for third bingo
@@ -30,10 +30,10 @@ const game = () => {
     let numbersCalled; //list of numbers called
     let numbersRemaining; //list of numbers remaining to call
     let streak; //current marked cell streak
-    let numbersLeft; //amount of numbers left to call
+    let numbersLeft; //number of numbers left to call
     let cellsMarked; //list of marked cells on bingo board
-    let isGameStarted; //check if is game started
-    let isGameEnded; //check if is game ended
+    let isGameStarted; //check if the game started
+    let isGameEnded; //check if the game ended
     let startButton = document.getElementById("start-button"); //start button
     let bingoTable = document.getElementById("bingo-table"); //bingo table
     let scoreText = document.getElementById("score"); //score text
@@ -65,7 +65,7 @@ const game = () => {
                 break;
             case "medium": //medium difficulty
                 callTime = 2000; //call numbers every 2 seconds
-                difficultyMultiplier = 1.5; //increase score by 50 percent
+                difficultyMultiplier = 1.5; //increase the score by 50 percent
                 timeBonus = 750; //bonus score for marking within 750 milliseconds
                 break;
             case "hard": //hard difficulty
@@ -76,7 +76,7 @@ const game = () => {
         }
     }
     function startGame() {
-        //when start button is clicked
+        //when the start button is clicked
         score = 0; //set score to 0
         comboMultiplier = 1; //set combo multiplier to 1
         bingoMultiplier = 1; //set bingo multiplier to 1
@@ -85,7 +85,7 @@ const game = () => {
         timeCombo = 0; //set time combo to 0
         bingos = 0; //set bingos to 0
         bingoCount = 0; //set bingo count to 0
-        bingo1Count = 75; //set all numbered bingo count to 75 (all numbers called)
+        bingo1Count = 75; //set all numbered bingo counts to 75 (all numbers called)
         bingo2Count = 75;
         bingo3Count = 75;
         bingo4Count = 75;
@@ -96,18 +96,18 @@ const game = () => {
         bingo9Count = 75;
         bingo10Count = 75;
         blackoutBingoCount = 75;
-        lastBingoCount = 0; //set last bingo count to 0
+        lastBingoCount = 0; //set the last bingo count to 0
         bingosMadeMultiplier = 1; //set bingo made multiplier to 1
-        bingoBoard = []; //set bingo board to empty array
-        numbersCalled = []; //set numbers called to empty array
-        numbersRemaining = []; //set numbers remaining to empty array
+        bingoBoard = []; //set bingo board to an empty array
+        numbersCalled = []; //set numbers called to an empty array
+        numbersRemaining = []; //set numbers remaining to an empty array
         streak = 0; //set streak to 0
         numbersLeft = 75; //set numbers left to 75
-        cellsMarked = []; //set cells marked to empty array
+        cellsMarked = []; //set cells marked to an empty array
         isGameStarted = true; //set is game started to true
         isGameEnded = false; //set is game ended to false
-        freeSpaceMultiplier = freeSpaceButton.checked ? 1.25 : 1; //update bonus free space score multiplier by checking if free space button is checked
-        scoreText.innerText = 0; //set score text to 0
+        freeSpaceMultiplier = freeSpaceButton.checked ? 1.25 : 1; //update bonus free space score multiplier by checking if the free space button is checked
+        scoreText.innerText = "0"; //set score text to 0
         startButton.disabled = true; //disable start button
         easyButton.disabled = true; //disable easy difficulty button
         mediumButton.disabled = true; //disable medium difficulty button
@@ -121,7 +121,7 @@ const game = () => {
                 //repeat for each column in each row
                 let cellNumber = Math.floor(Math.random() * 15) + i * 15 + 1;
                 if (!columnNumbers.includes(cellNumber)) {
-                    //check if other numbers is not in bingo board
+                    //check if other numbers are not in bingo board
                     columnNumbers.push(cellNumber); //add numbers to bingo board
                     bingoTable
                         .querySelector(`#row-${j + 1}`)
@@ -133,7 +133,7 @@ const game = () => {
             bingoBoard.push(columnNumbers); //add column numbers to bingo board
         }
         if (freeSpaceButton.checked) {
-            //check if free space button is checked
+            //check if the free space button is checked
             cellsMarked[2][2] = true; //mark the center cell on the free space on the bingo board
             bingoTable.querySelector("#row-3").querySelector("#cell-3-3").innerText =
                 ""; //update the text
@@ -142,7 +142,7 @@ const game = () => {
             numbersRemaining.push(i + 1); //add numbers to numbers remaining
         }
         for (let i = 0; i < numbersRemaining.length; i++) {
-            //repeat for each numbers for numbers remaining array
+            //repeat for each number for numbers remaining array
             let randomIndex = Math.floor(Math.random() * numbersRemaining.length);
             [numbersRemaining[i], numbersRemaining[randomIndex]] = [
                 numbersRemaining[randomIndex],
@@ -169,7 +169,7 @@ const game = () => {
                 mediumButton.disabled = false; //enable medium difficulty button
                 hardButton.disabled = false; //enable hard difficulty button
                 freeSpaceButton.disabled = false; //enable free space button
-                increaseScoreBingo(bingo1Count); //get bonus points based on number of bingo numbers called for a bingo
+                increaseScoreBingo(bingo1Count); //get bonus points based on the number of bingo numbers called for a bingo
                 increaseScoreBingo(bingo2Count);
                 increaseScoreBingo(bingo3Count);
                 increaseScoreBingo(bingo4Count);
@@ -199,27 +199,27 @@ const game = () => {
         ); //round the score to nearest integer
     }
     function increaseScoreBingo(bingoNumbersCalled) {
-        //increase score based on number of bingo numbers called
+        //increase score based on the number of bingo numbers called
         score = Math.round((score * 75) / bingoNumbersCalled); //round the score to nearest integer
         scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
     }
     function markCell(y, x) {
         //mark cell on specified cell position
         if (isGameStarted && !isGameEnded) {
-            //check if game is started and not ended
+            //check if the game is started and not ended
             if (
                 numbersCalled.includes(bingoBoard[x - 1][y - 1]) &&
                 cellsMarked[x - 1][y - 1] === undefined
             ) {
-                //check if numbers called is part of bingo board and cell is not marked
+                //check if numbers called are part of bingo board and cell is not marked
                 if (numbersCalled[0] === bingoBoard[x - 1][y - 1]) {
-                    //check if current number called is in the bingo board
+                    //check if the current number called is in the bingo board
                     calledBonus = 2; //double the called bonus
                     if (
                         lastCalled === numbersCalled[1] ||
                         (lastCalled === undefined && numbersCalled.length === 1)
                     ) {
-                        //check if last marked number is marked or if cell marked on first number called
+                        //check if the last marked number is marked or if cell marked on first number called
                         combo++; //increase combo
                     } else {
                         combo = 1; //reset combo to 1
@@ -229,7 +229,7 @@ const game = () => {
                     combo = 1; //reset combo to 1
                 }
                 if (calledBonus === 2 && performance.now() - timeCalled < timeBonus) {
-                    //check if time since last number called is less than specified time bonus based on difficulty
+                    //check if time since the last number called is less than specified time bonus based on difficulty
                     timeMultiplier = 2; //double the time multiplier
                 } else {
                     timeMultiplier = 1; //reset time multiplier to 1
@@ -255,7 +255,7 @@ const game = () => {
                                 lastCalled === bingoBoard[row][column] ||
                                 lastCalled === bingoBoard[row][column + 1]
                             ) {
-                                //check if last called number is one of cells marked
+                                //check if the last called number is one of the cells marked
                                 increaseScore(125); //increase a lot of points
                             } else {
                                 increaseScore(5); //else increase a little bit of points
@@ -536,7 +536,7 @@ const game = () => {
                     mediumButton.disabled = false; //enable medium difficulty button
                     hardButton.disabled = false; //enable hard difficulty button
                     freeSpaceButton.disabled = false; //enable free space button
-                    increaseScoreBingo(bingo1Count); //get bonus points based on number of bingo numbers called for a bingo
+                    increaseScoreBingo(bingo1Count); //get bonus points based on the number of bingo numbers called for a bingo
                     increaseScoreBingo(bingo2Count);
                     increaseScoreBingo(bingo3Count);
                     increaseScoreBingo(bingo4Count);
@@ -612,9 +612,9 @@ const game = () => {
             rowBingos.filter(Boolean).length +
             columnBingos.filter(Boolean).length +
             diagonalBingos.filter(Boolean).length;
-        bingosMadeMultiplier = Math.max(1, bingos - lastBingoCount); //calculate number of bingos made when cell is marked
+        bingosMadeMultiplier = Math.max(1, bingos - lastBingoCount); //calculate the number of bingos made when a cell is marked
         while (bingoCount < bingos) {
-            //loop for bingo count to make sure to increase score once for each bingo
+            //loop for bingo counts to make sure to increase score once for each bingo
             bingoCount++;
             switch (bingoCount) {
                 case 1:
