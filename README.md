@@ -6,7 +6,8 @@ marking the cell quickly when the number is called will get bonus points and cha
 will call numbers faster,
 but gets more points.
 
-# Features
+# Features 
 
 - Various score multipliers
 - Three difficulty modes: Easy, Medium and Hard
+- Free space button to play the game with a free space marked at center of board

@@ -10,3 +10,4 @@ but gets more points.
 
 - Various score multipliers
 - Three difficulty modes: Easy, Medium and Hard
+- Free space button to play the game with a free space marked at center of board
