@@ -51,7 +51,7 @@ const game = () => {
         for (let column = 0; column < 5; column++) {
             bingoTable.rows[row + 1].cells[column].addEventListener(
                 "click",
-                markCell.bind(null, row + 1, column + 1)
+                markCell.bind(null, row + 1, column + 1),
             );
         }
     }
@@ -195,7 +195,7 @@ const game = () => {
             (1 + timeCombo / 10) *
             difficultyMultiplier *
             bingosMadeMultiplier *
-            freeSpaceMultiplier
+            freeSpaceMultiplier,
         ); //round the score to nearest integer
     }
     function increaseScoreBingo(bingoNumbersCalled) {
