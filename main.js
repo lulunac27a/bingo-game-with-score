@@ -594,7 +594,7 @@ const game = () => {
                     mediumButton.disabled = false; //enable medium difficulty button
                     hardButton.disabled = false; //enable hard difficulty button
                     speedButton.disabled = false; //enable speed mode difficulty button
-                    skipNumberButton.disabled = true; //disabled skip number button
+                    skipNumberButton.disabled = true; //disable skip number button
                     freeSpaceButton.disabled = false; //enable free space button
                     increaseScoreBingo(bingo1Count); //get bonus points based on the number of bingo numbers called for a bingo
                     increaseScoreBingo(bingo2Count);
