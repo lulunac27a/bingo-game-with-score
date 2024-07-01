@@ -5,6 +5,7 @@ const game = () => {
     let timeBonus = 1000; //bonus for marking quickly before time bonus
     let lastCalled; //last called number
     let difficultyMultiplier = 1; //score multiplier
+    let difficultyMode = "easy"; //game difficulty mode
     let comboMultiplier; //combo multiplier
     let combo; //combo
     let timeCombo; //combo for marking a cell with last number called
@@ -41,12 +42,16 @@ const game = () => {
     let easyButton = document.getElementById("easy"); //easy difficulty button
     let mediumButton = document.getElementById("medium"); //medium difficulty button
     let hardButton = document.getElementById("hard"); //hard difficulty button
+    let speedButton = document.getElementById("speed-mode"); //speed mode difficulty button
+    let skipNumberButton = document.getElementById("skip-number"); //skip number button
     let freeSpaceButton = document.getElementById("free-space-button"); //free space button
     let freeSpaceMultiplier = freeSpaceButton.checked ? 1.25 : 1; //bonus score multiplier for using free space
     startButton.addEventListener("click", startGame);
     easyButton.addEventListener("click", setDifficulty.bind(null, "easy"));
     mediumButton.addEventListener("click", setDifficulty.bind(null, "medium"));
     hardButton.addEventListener("click", setDifficulty.bind(null, "hard"));
+    speedButton.addEventListener("click", setDifficulty.bind(null, "speed-mode"));
+    skipNumberButton.addEventListener("click", skipNumbers);
     for (let row = 0; row < 5; row++) {
         for (let column = 0; column < 5; column++) {
             bingoTable.rows[row + 1].cells[column].addEventListener(
@@ -62,16 +67,25 @@ const game = () => {
                 callTime = 3000; //call numbers every 3 seconds
                 difficultyMultiplier = 1; //no score increase
                 timeBonus = 1000; //bonus score for marking within a second
+                difficultyMode = "easy"; //set difficulty mode to easy
                 break;
             case "medium": //medium difficulty
                 callTime = 2000; //call numbers every 2 seconds
                 difficultyMultiplier = 1.5; //increase the score by 50 percent
                 timeBonus = 750; //bonus score for marking within 750 milliseconds
+                difficultyMode = "medium"; //set difficulty mode to medium
                 break;
             case "hard": //hard difficulty
                 callTime = 1000; //call numbers every second
                 difficultyMultiplier = 2; //double the score
                 timeBonus = 500; //bonus score for marking within 500 milliseconds
+                difficultyMode = "hard"; //set difficulty mode to hard
+                break;
+            case "speed-mode": //speed mode difficulty
+                callTime = 0; //don't call numbers automatically
+                difficultyMultiplier = 1; //no score increase
+                timeBonus = -1; //no time bonus
+                difficultyMode = "speed-mode"; //set difficulty mode to speed mode
                 break;
         }
     }
@@ -81,6 +95,8 @@ const game = () => {
         comboMultiplier = 1; //set combo multiplier to 1
         bingoMultiplier = 1; //set bingo multiplier to 1
         timeMultiplier = 1; //set time multiplier to 1
+        timeCalled = performance.now(); //set time called to current performance time
+        calledBonus = 1; //set called bonus multiplier to 1
         combo = 0; //set combo to 0
         timeCombo = 0; //set time combo to 0
         bingos = 0; //set bingos to 0
@@ -112,6 +128,10 @@ const game = () => {
         easyButton.disabled = true; //disable easy difficulty button
         mediumButton.disabled = true; //disable medium difficulty button
         hardButton.disabled = true; //disable hard difficulty button
+        speedButton.disabled = true; //disable speed mode difficulty button
+        if (difficultyMode === "speed-mode") {
+            skipNumberButton.disabled = false; //enable skip number button
+        }
         freeSpaceButton.disabled = true; //disable free space button
         for (let i = 0; i < 5; i++) {
             //repeat for each row in bingo board
@@ -119,7 +139,7 @@ const game = () => {
             let j = 0;
             while (j < 5) {
                 //repeat for each column in each row
-                let cellNumber = Math.floor(Math.random() * 15) + i * 15 + 1;
+                let cellNumber = Math.floor(Math.random() * 15) + i * 15 + 1; //each column has 15 numbers
                 if (!columnNumbers.includes(cellNumber)) {
                     //check if other numbers are not in bingo board
                     columnNumbers.push(cellNumber); //add numbers to bingo board
@@ -149,8 +169,14 @@ const game = () => {
                 numbersRemaining[i],
             ]; //shuffle the numbers remaining array
         }
-        callNumbers(); //call numbers
-        setInterval(callNumbers, callTime); //repeat every few seconds based on difficulty
+        if (difficultyMode !== "speed-mode") {
+            //if difficulty mode is not speed mode
+            callNumbers(); //call numbers
+            setInterval(callNumbers, callTime); //repeat every few seconds based on difficulty
+        }
+        if (difficultyMode === "speed-mode") {
+            startButton.addEventListener("click", callNumbers());
+        }
     }
     function callNumbers() {
         if (isGameStarted && !isGameEnded) {
@@ -168,6 +194,8 @@ const game = () => {
                 easyButton.disabled = false; //enable easy difficulty button
                 mediumButton.disabled = false; //enable medium difficulty button
                 hardButton.disabled = false; //enable hard difficulty button
+                speedButton.disabled = false; //enable speed mode difficulty button
+                skipNumberButton.disabled = true; //disable skip number button
                 freeSpaceButton.disabled = false; //enable free space button
                 increaseScoreBingo(bingo1Count); //get bonus points based on the number of bingo numbers called for a bingo
                 increaseScoreBingo(bingo2Count);
@@ -180,6 +208,25 @@ const game = () => {
                 increaseScoreBingo(bingo9Count);
                 increaseScoreBingo(bingo10Count);
                 increaseScoreBingo(blackoutBingoCount);
+            }
+        }
+    }
+    function skipNumbers() {
+        //do action when skip number button is pressed
+        if (isGameStarted && !isGameEnded) {
+            //check if game is started and game is not ended
+            if (difficultyMode === "speed-mode") {
+                //if game difficulty mode is speed mode
+                if (!bingoBoard.includes(numbersCalled[0])) {
+                    //if last number called is not in bingo board
+                    increaseScore(100); //increase score
+                    streak++; //increase streak by 1
+                    scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
+                    callNumbers(); //call next number
+                } else {
+                    //if last number called is in bingo board
+                    streak = 0; //reset streak to 0
+                }
             }
         }
     }
@@ -214,12 +261,18 @@ const game = () => {
                 //check if numbers called are part of bingo board and cell is not marked
                 if (numbersCalled[0] === bingoBoard[x - 1][y - 1]) {
                     //check if the current number called is in the bingo board
-                    calledBonus = 2; //double the called bonus
+                    if (difficultyMode !== "speed-mode") {
+                        //if difficulty mode is not speed mode
+                        calledBonus = 2; //double the called bonus
+                    } else {
+                        calledBonus = 1; //don't get double called bonus score if difficulty mode is speed mode
+                    }
                     if (
-                        lastCalled === numbersCalled[1] ||
-                        (lastCalled === undefined && numbersCalled.length === 1)
+                        (lastCalled === numbersCalled[1] ||
+                            (lastCalled === undefined && numbersCalled.length === 1)) &&
+                        difficultyMode !== "speed-mode"
                     ) {
-                        //check if the last marked number is marked or if cell marked on first number called
+                        //check if the last marked number is marked or if cell marked on first number called and game difficulty is not speed mode
                         combo++; //increase combo
                     } else {
                         combo = 1; //reset combo to 1
@@ -228,18 +281,20 @@ const game = () => {
                     calledBonus = 1; //reset called bonus to 1
                     combo = 1; //reset combo to 1
                 }
-                if (calledBonus === 2 && performance.now() - timeCalled < timeBonus) {
-                    //check if time since the last number called is less than specified time bonus based on difficulty
-                    timeMultiplier = 2; //double the time multiplier
+                //calculate time multiplier based on how fast the cell is marked
+                if (difficultyMode === "speed-mode") {
+                    //check if difficulty mode is speed mode
+                    timeMultiplier = 1 + 1000 / (performance.now() - timeCalled + 1000); //double the time multiplier
                 } else {
-                    timeMultiplier = 1; //reset time multiplier to 1
+                    timeMultiplier =
+                        1 + timeBonus / (performance.now() - timeCalled + timeBonus); //set time bonus multiplier based on how fast the user mark the cell
                 }
                 if (calledBonus === 2) {
                     timeCombo++; //increase time combo
                 } else {
                     timeCombo = 0; //reset time combo
                 }
-                comboMultiplier = combo;
+                comboMultiplier = combo; //set combo multiplier to combo
                 cellsMarked[x - 1][y - 1] = true; //mark the cell
                 lastCalled = bingoBoard[x - 1][y - 1];
                 for (let row = 0; row < 5; row++) {
@@ -523,6 +578,9 @@ const game = () => {
                 checkBingos(); //check for bingos
                 streak++; //increase streak
                 scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
+                if (difficultyMode === "speed-mode") {
+                    callNumbers(); //call numbers
+                }
                 if (
                     cellsMarked.every((row) => row.every((cell) => cell !== undefined)) &&
                     isGameStarted &&
@@ -535,6 +593,8 @@ const game = () => {
                     easyButton.disabled = false; //enable easy difficulty button
                     mediumButton.disabled = false; //enable medium difficulty button
                     hardButton.disabled = false; //enable hard difficulty button
+                    speedButton.disabled = false; //enable speed mode difficulty button
+                    skipNumberButton.disabled = true; //disabled skip number button
                     freeSpaceButton.disabled = false; //enable free space button
                     increaseScoreBingo(bingo1Count); //get bonus points based on the number of bingo numbers called for a bingo
                     increaseScoreBingo(bingo2Count);
