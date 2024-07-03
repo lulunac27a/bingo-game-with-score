@@ -196,8 +196,8 @@ const game = () => {
                 cellsMarked[i][3] === true &&
                 cellsMarked[i][4] === true
             ) {
+                increaseScore(1000); //increase score
                 bingoMultiplier++; //increase bingo multiplier
-                increaseScore(1000);
                 generateBingoNumber(i, 0);
                 generateBingoNumber(i, 1);
                 generateBingoNumber(i, 2);
@@ -212,8 +212,8 @@ const game = () => {
                 cellsMarked[3][i] === true &&
                 cellsMarked[4][i] === true
             ) {
-                bingoMultiplier++;
                 increaseScore(1000);
+                bingoMultiplier++;
                 generateBingoNumber(0, i);
                 generateBingoNumber(1, i);
                 generateBingoNumber(2, i);
@@ -228,8 +228,8 @@ const game = () => {
                 cellsMarked[3][3] === true &&
                 cellsMarked[4][4] === true
             ) {
-                bingoMultiplier++;
                 increaseScore(1000);
+                bingoMultiplier++;
                 generateBingoNumber(0, 0);
                 generateBingoNumber(1, 1);
                 generateBingoNumber(2, 2);
@@ -244,8 +244,8 @@ const game = () => {
                 cellsMarked[3][1] === true &&
                 cellsMarked[4][0] === true
             ) {
-                bingoMultiplier++;
                 increaseScore(1000);
+                bingoMultiplier++;
                 generateBingoNumber(0, 4);
                 generateBingoNumber(1, 3);
                 generateBingoNumber(2, 2);
