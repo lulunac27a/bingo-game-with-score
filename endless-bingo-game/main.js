@@ -119,6 +119,7 @@ const game = () => {
             time180SecondsButton.disabled = false; //enable 180 seconds time button
             time300SecondsButton.disabled = false; //enable 300 seconds time button
             skipNumberButton.disabled = true; //disable skip number button
+            clearInterval(updateTime); //clear update time interval
         }
     }
     function markCell(y, x) {
