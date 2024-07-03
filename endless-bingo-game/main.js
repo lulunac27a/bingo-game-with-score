@@ -21,6 +21,7 @@ const game = () => {
     let time180SecondsButton = document.getElementById("180-seconds"); //180 seconds time button
     let time300SecondsButton = document.getElementById("300-seconds"); //300 seconds time button
     let skipNumberButton = document.getElementById("skip-number"); //skip number button
+    let updateTimeInterval; //interval to update time
     time60SecondsButton.addEventListener("click", setTime.bind(null, 60));
     time120SecondsButton.addEventListener("click", setTime.bind(null, 120));
     time180SecondsButton.addEventListener("click", setTime.bind(null, 180));
@@ -81,7 +82,7 @@ const game = () => {
             bingoBoard.push(columnNumbers); //add column numebrs to bingo board
         }
         callNumbers(); //call numbers
-        setInterval(updateTime, 1000); //update time every second
+        updateTimeInterval = setInterval(updateTime, 1000); //update time every second
     }
     function skipNumbers() {
         //do action when skip number button is pressed
@@ -113,13 +114,13 @@ const game = () => {
             //if time remaining is 0
             isGameStarted = false; //set is game started to false
             isGameEnded = true; //set is game ended to true
-            startButton.disabled = true; //disable start button
+            startButton.disabled = false; //enable start button
             time60SecondsButton.disabled = false; //enable 60 seconds time button
             time120SecondsButton.disabled = false; //enable 120 seconds time button
             time180SecondsButton.disabled = false; //enable 180 seconds time button
             time300SecondsButton.disabled = false; //enable 300 seconds time button
             skipNumberButton.disabled = true; //disable skip number button
-            clearInterval(updateTime); //clear update time interval
+            clearInterval(updateTimeInterval); //clear update time interval
         }
     }
     function markCell(y, x) {
