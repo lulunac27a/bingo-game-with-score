@@ -60,7 +60,7 @@ const game = () => {
             let columnNumbers = [];
             let j = 0;
             while (j < 5) {
-                let cellNumber = Math.floor(Math.random() * 5) + i * 5 + 1;
+                let cellNumber = Math.floor(Math.random() * 15) + i * 15 + 1;
                 if (!columnNumbers.includes(cellNumber)) {
                     columnNumbers.push(cellNumber);
                     bingoTable
@@ -127,7 +127,7 @@ const game = () => {
         let newLastCalled;
         let sameNumber = false;
         while (!sameNumber) {
-            newLastCalled = Math.floor(Math.random() * 25) + 1;
+            newLastCalled = Math.floor(Math.random() * 75) + 1;
             if (newLastCalled !== lastCalled) {
                 sameNumber = true;
             }
@@ -137,13 +137,13 @@ const game = () => {
     }
     function generateBingoNumber(x, y) {
         let numberCell;
-        let cellNumber = Math.floor(Math.random() * 5) + x * 5 + 1;
+        let cellNumber = Math.floor(Math.random() * 15) + x * 15 + 1;
         numberCell = cellNumber;
         let i = 0;
         while (i < 5) {
             if (bingoBoard[x][i] === cellNumber) {
                 i = 0;
-                cellNumber = Math.floor(Math.random() * 5) + x * 5 + 1;
+                cellNumber = Math.floor(Math.random() * 15) + x * 15 + 1;
                 numberCell = cellNumber;
             } else {
                 i++;
