@@ -137,6 +137,7 @@ const game = () => {
                     .querySelector(`#row-${y}`)
                     .querySelector(`#cell-${y}-${x}`).innerText = ""; //mark the cell on bingo board
                 streak++; //increase streak by 1
+                timeMultiplier = 1 + 1000 / (performance.now() - timeCalled + 1000); //set time multiplier based on how fast the cell is clicked correctly
                 timeCalled = performance.now(); //set time called to current performance time
                 cellsMarked[x - 1][y - 1] = true; //mark the cell
                 bingoBoard[x - 1][y - 1] = undefined; //remove number from bingo board
