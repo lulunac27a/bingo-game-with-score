@@ -157,7 +157,7 @@ const game = () => {
             .querySelector(`#cell-${y + 1}-${x + 1}`).innerText = numberCell;
     }
     function checkBingos() {
-        for (i = 0; i < 5; i++) {
+        for (let i = 0; i < 5; i++) {
             if (
                 cellsMarked[i][0] === true &&
                 cellsMarked[i][1] === true &&
