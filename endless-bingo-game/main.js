@@ -29,7 +29,10 @@ const game = () => {
     skipNumberButton.addEventListener("click", skipNumbers);
     for (let row = 0; row < 5; row++) {
         for (let column = 0; column < 5; column++) {
-            bingoTable.rows[row + 1].cells[column].addEventListener("click", markCell.bind(null, row + 1, column + 1));
+            bingoTable.rows[row + 1].cells[column].addEventListener(
+                "click",
+                markCell.bind(null, row + 1, column + 1),
+            );
         }
     }
     function setTime(seconds) {
@@ -60,7 +63,9 @@ const game = () => {
                 let cellNumber = Math.floor(Math.random() * 5) + i * 5 + 1;
                 if (!columnNumbers.includes(cellNumber)) {
                     columnNumbers.push(cellNumber);
-                    bingoTable.querySelector(`#row-${j + 1}`).querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
+                    bingoTable
+                        .querySelector(`#row-${j + 1}`)
+                        .querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
                     j++;
                 }
             }
@@ -79,8 +84,7 @@ const game = () => {
         }
         if (cellInBoard) {
             streak = 0;
-        }
-        else {
+        } else {
             increaseScore(100);
             streak++;
             callNumbers();
@@ -90,8 +94,7 @@ const game = () => {
         if (time > 0) {
             time--;
             timeText.innerText = time;
-        }
-        else {
+        } else {
             isGameStarted = false;
             isGameEnded = true;
             startButton.disabled = false;
@@ -106,15 +109,16 @@ const game = () => {
         if (isGameStarted && !isGameEnded) {
             if (lastCalled === bingoBoard[x - 1][y - 1]) {
                 increaseScore(100);
-                bingoTable.querySelector(`#row-${y}`).querySelector(`#cell-${y}-${x}`).innerText = "";
+                bingoTable
+                    .querySelector(`#row-${y}`)
+                    .querySelector(`#cell-${y}-${x}`).innerText = "";
                 streak++;
                 timeCalled = performance.now();
                 cellsMarked[x - 1][y - 1] = true;
                 bingoBoard[x - 1][y - 1] = undefined;
                 checkBingos();
                 callNumbers();
-            }
-            else {
+            } else {
                 streak = 0;
             }
         }
@@ -141,19 +145,26 @@ const game = () => {
                 i = 0;
                 cellNumber = Math.floor(Math.random() * 5) + x * 5 + 1;
                 numberCell = cellNumber;
-            }
-            else {
+            } else {
                 i++;
             }
         }
 
         bingoBoard[x][y] = numberCell;
         cellsMarked[x][y] = undefined;
-        bingoTable.querySelector(`#row-${y + 1}`).querySelector(`#cell-${y + 1}-${x + 1}`).innerText = numberCell;
+        bingoTable
+            .querySelector(`#row-${y + 1}`)
+            .querySelector(`#cell-${y + 1}-${x + 1}`).innerText = numberCell;
     }
     function checkBingos() {
         for (i = 0; i < 5; i++) {
-            if (((cellsMarked[i][0] === true && cellsMarked[i][1] === true) && (cellsMarked[i][2] === true && cellsMarked[i][3] === true)) && cellsMarked[i][4] === true) {
+            if (
+                cellsMarked[i][0] === true &&
+                cellsMarked[i][1] === true &&
+                cellsMarked[i][2] === true &&
+                cellsMarked[i][3] === true &&
+                cellsMarked[i][4] === true
+            ) {
                 bingoMultiplier++;
                 generateBingoNumber(i, 0);
                 generateBingoNumber(i, 1);
@@ -161,7 +172,13 @@ const game = () => {
                 generateBingoNumber(i, 3);
                 generateBingoNumber(i, 4);
             }
-            if (((cellsMarked[0][i] === true && cellsMarked[1][i] === true) && (cellsMarked[2][i] === true && cellsMarked[3][i] === true)) && cellsMarked[4][i] === true) {
+            if (
+                cellsMarked[0][i] === true &&
+                cellsMarked[1][i] === true &&
+                cellsMarked[2][i] === true &&
+                cellsMarked[3][i] === true &&
+                cellsMarked[4][i] === true
+            ) {
                 bingoMultiplier++;
                 generateBingoNumber(0, i);
                 generateBingoNumber(1, i);
@@ -169,7 +186,13 @@ const game = () => {
                 generateBingoNumber(3, i);
                 generateBingoNumber(4, i);
             }
-            if (((cellsMarked[0][0] === true && cellsMarked[1][1] === true) && (cellsMarked[2][2] === true && cellsMarked[3][3] === true)) && cellsMarked[4][4] === true) {
+            if (
+                cellsMarked[0][0] === true &&
+                cellsMarked[1][1] === true &&
+                cellsMarked[2][2] === true &&
+                cellsMarked[3][3] === true &&
+                cellsMarked[4][4] === true
+            ) {
                 bingoMultiplier++;
                 generateBingoNumber(0, 0);
                 generateBingoNumber(1, 1);
@@ -177,7 +200,13 @@ const game = () => {
                 generateBingoNumber(3, 3);
                 generateBingoNumber(4, 4);
             }
-            if (((cellsMarked[0][4] === true && cellsMarked[1][3] === true) && (cellsMarked[2][2] === true && cellsMarked[3][1] === true)) && cellsMarked[4][0] === true) {
+            if (
+                cellsMarked[0][4] === true &&
+                cellsMarked[1][3] === true &&
+                cellsMarked[2][2] === true &&
+                cellsMarked[3][1] === true &&
+                cellsMarked[4][0] === true
+            ) {
                 bingoMultiplier++;
                 generateBingoNumber(0, 4);
                 generateBingoNumber(1, 3);
@@ -188,8 +217,10 @@ const game = () => {
         }
     }
     function increaseScore(amount) {
-        score += Math.round(amount * bingoMultiplier * (1 + streak / 20) * timeMultiplier);
+        score += Math.round(
+            amount * bingoMultiplier * (1 + streak / 20) * timeMultiplier,
+        );
         scoreText.innerText = score.toLocaleString("en-US");
     }
-}
+};
 game();

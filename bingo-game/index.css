@@ -1,12 +1,13 @@
-table, td {
-    border: 1px solid black;
-    width: 150px;
-    height: 25px;
-    text-align: center;
-    table-layout: fixed;
+table,
+td {
+  border: 1px solid black;
+  width: 150px;
+  height: 25px;
+  text-align: center;
+  table-layout: fixed;
 }
 
 * {
-    font-family: system-ui, sans-serif;
-    font-variant-numeric: tabular-nums;
+  font-family: system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
 }
