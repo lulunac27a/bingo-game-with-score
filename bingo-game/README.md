@@ -12,4 +12,4 @@ but gets more points.
 - Three difficulty modes: Easy, Medium and Hard
 - Free space button to play the game with a free space marked at center of board
 
-Try it at [StackBlitz](https://stackblitz.com/edit/lulunac27a-bingo-game-with-score)
+Try it at [StackBlitz](https://stackblitz.com/edit/bingo-game-with-score)

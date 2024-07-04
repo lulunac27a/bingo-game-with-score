@@ -6,3 +6,5 @@ This web app is an endless bingo game with score multipliers like making bingo w
 
 - 1, 2, 3, 5 minute time limit
 - Various score multipliers
+
+Try it at [StackBlitz](https://stackblitz.com/edit/endless-bingo-game-with-score)
