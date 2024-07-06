@@ -218,13 +218,13 @@ const game = () => {
             if (difficultyMode === "speed-mode") {
                 //if game difficulty mode is speed mode
                 if (!bingoBoard.includes(numbersCalled[0])) {
-                    //if last number called is not in bingo board
+                    //if the last number called is not in bingo board
                     increaseScore(100); //increase score
                     streak++; //increase streak by 1
                     scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
-                    callNumbers(); //call next number
+                    callNumbers(); //call the next number
                 } else {
-                    //if last number called is in bingo board
+                    //if the last number called is in bingo board
                     streak = 0; //reset streak to 0
                 }
             }
@@ -272,7 +272,7 @@ const game = () => {
                             (lastCalled === undefined && numbersCalled.length === 1)) &&
                         difficultyMode !== "speed-mode"
                     ) {
-                        //check if the last marked number is marked or if cell marked on first number called and game difficulty is not speed mode
+                        //check if the last marked number is marked or if cell marked on the first number called and game difficulty is not speed mode
                         combo++; //increase combo
                     } else {
                         combo = 1; //reset combo to 1
@@ -287,7 +287,7 @@ const game = () => {
                     timeMultiplier = 1 + 1000 / (performance.now() - timeCalled + 1000); //double the time multiplier
                 } else {
                     timeMultiplier =
-                        1 + timeBonus / (performance.now() - timeCalled + timeBonus); //set time bonus multiplier based on how fast the user mark the cell
+                        1 + timeBonus / (performance.now() - timeCalled + timeBonus); //set time bonus multiplier based on how fast the user marks the cell
                 }
                 if (calledBonus === 2) {
                     timeCombo++; //increase time combo
