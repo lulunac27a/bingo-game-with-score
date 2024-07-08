@@ -46,7 +46,7 @@ const game = () => {
     function startGame() {
         //when the start button is clicked
         score = 0; //set score to 0
-        scoreText.textContent = 0; //update score text
+        scoreText.textContent = "0"; //update score text
         timeCalled = performance.now(); //set time called to current performance time
         timeMultiplier = 1; //set time score multiplier to 1
         bingoMultiplier = 1; //set bingo score multiplier to 1
