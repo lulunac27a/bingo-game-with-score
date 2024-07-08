@@ -123,7 +123,7 @@ const game = () => {
         isGameStarted = true; //set is game started to true
         isGameEnded = false; //set is game ended to false
         freeSpaceMultiplier = freeSpaceButton.checked ? 1.25 : 1; //update bonus free space score multiplier by checking if the free space button is checked
-        scoreText.innerText = "0"; //set score text to 0
+        scoreText.textContent = "0"; //set score text to 0
         startButton.disabled = true; //disable start button
         easyButton.disabled = true; //disable easy difficulty button
         mediumButton.disabled = true; //disable medium difficulty button
@@ -145,7 +145,7 @@ const game = () => {
                     columnNumbers.push(cellNumber); //add numbers to bingo board
                     bingoTable
                         .querySelector(`#row-${j + 1}`)
-                        .querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
+                        .querySelector(`#cell-${j + 1}-${i + 1}`).textContent = cellNumber;
                     j++;
                 }
             }
@@ -155,8 +155,9 @@ const game = () => {
         if (freeSpaceButton.checked) {
             //check if the free space button is checked
             cellsMarked[2][2] = true; //mark the center cell on the free space on the bingo board
-            bingoTable.querySelector("#row-3").querySelector("#cell-3-3").innerText =
-                ""; //update the text
+            bingoTable
+                .querySelector("#row-3")
+                .querySelector("#cell-3-3").textContent = ""; //update the text
         }
         for (let i = 0; i < 75; i++) {
             numbersRemaining.push(i + 1); //add numbers to numbers remaining
@@ -185,7 +186,7 @@ const game = () => {
                 numbersCalled.unshift(numbersRemaining[0]);
                 numbersRemaining.shift();
                 numbersLeft--; //decrease numbers left to call
-                numberCalled.innerText = numbersCalled[0]; //update number called text to last number called
+                numberCalled.textContent = numbersCalled[0]; //update number called text to last number called
                 timeCalled = performance.now(); //set time called to current performance time
             } else {
                 isGameStarted = false; //set is game started to false
@@ -221,7 +222,7 @@ const game = () => {
                     //if the last number called is not in bingo board
                     increaseScore(100); //increase score
                     streak++; //increase streak by 1
-                    scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
+                    scoreText.textContent = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
                     callNumbers(); //call the next number
                 } else {
                     //if the last number called is in bingo board
@@ -248,7 +249,7 @@ const game = () => {
     function increaseScoreBingo(bingoNumbersCalled) {
         //increase score based on the number of bingo numbers called
         score = Math.round((score * 75) / bingoNumbersCalled); //round the score to nearest integer
-        scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
+        scoreText.textContent = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
     }
     function markCell(y, x) {
         //mark cell on specified cell position
@@ -574,10 +575,10 @@ const game = () => {
                 increaseScore(100); //increase score when cell is marked correctly
                 bingoTable
                     .querySelector(`#row-${y}`)
-                    .querySelector(`#cell-${y}-${x}`).innerText = ""; //mark the cell on the bingo board
+                    .querySelector(`#cell-${y}-${x}`).textContent = ""; //mark the cell on the bingo board
                 checkBingos(); //check for bingos
                 streak++; //increase streak
-                scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
+                scoreText.textContent = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
                 if (difficultyMode === "speed-mode") {
                     callNumbers(); //call numbers
                 }

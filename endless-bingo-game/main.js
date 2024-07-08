@@ -41,12 +41,12 @@ const game = () => {
     function setTime(seconds) {
         //set time in seconds
         timeLimit = seconds; //set time limit in seconds
-        timeText.innerText = seconds; //update time text
+        timeText.textContent = seconds; //update time text
     }
     function startGame() {
         //when the start button is clicked
         score = 0; //set score to 0
-        scoreText.innerText = 0; //update score text
+        scoreText.textContent = 0; //update score text
         timeCalled = performance.now(); //set time called to current performance time
         timeMultiplier = 1; //set time score multiplier to 1
         bingoMultiplier = 1; //set bingo score multiplier to 1
@@ -74,7 +74,7 @@ const game = () => {
                     columnNumbers.push(cellNumber); //add numbers to bingo board
                     bingoTable
                         .querySelector(`#row-${j + 1}`)
-                        .querySelector(`#cell-${j + 1}-${i + 1}`).innerText = cellNumber;
+                        .querySelector(`#cell-${j + 1}-${i + 1}`).textContent = cellNumber;
                     j++;
                 }
             }
@@ -109,7 +109,7 @@ const game = () => {
         if (time > 0) {
             //if we still have time remaining
             time--; //decrease time remaining
-            timeText.innerText = time; //update time remaining text
+            timeText.textContent = time; //update time remaining text
         } else {
             //if time remaining is 0
             isGameStarted = false; //set is game started to false
@@ -135,7 +135,7 @@ const game = () => {
                 increaseScore(100); //increase score when cell is marked correctly
                 bingoTable
                     .querySelector(`#row-${y}`)
-                    .querySelector(`#cell-${y}-${x}`).innerText = ""; //mark the cell on bingo board
+                    .querySelector(`#cell-${y}-${x}`).textContent = ""; //mark the cell on bingo board
                 streak++; //increase streak by 1
                 timeMultiplier = 1 + 1000 / (performance.now() - timeCalled + 1000); //set time multiplier based on how fast the cell is clicked correctly
                 timeCalled = performance.now(); //set time called to current performance time
@@ -161,7 +161,7 @@ const game = () => {
             }
         }
         lastCalled = newLastCalled; //set last called number to new last called number
-        numberCalled.innerText = lastCalled; //update number called text
+        numberCalled.textContent = lastCalled; //update number called text
     }
     function generateBingoNumber(x, y) {
         //generate bingo number based on cell position
@@ -185,7 +185,7 @@ const game = () => {
         cellsMarked[x][y] = undefined; //unmark the marked cell in bingo board
         bingoTable
             .querySelector(`#row-${y + 1}`)
-            .querySelector(`#cell-${y + 1}-${x + 1}`).innerText = numberCell; //update bingo cell text
+            .querySelector(`#cell-${y + 1}-${x + 1}`).textContent = numberCell; //update bingo cell text
     }
     function checkBingos() {
         //check for bingos
@@ -262,7 +262,7 @@ const game = () => {
         score += Math.round(
             amount * bingoMultiplier * (1 + streak / 20) * timeMultiplier,
         );
-        scoreText.innerText = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
+        scoreText.textContent = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
     }
 };
 game();
