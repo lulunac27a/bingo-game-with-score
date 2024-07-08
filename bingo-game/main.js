@@ -145,7 +145,8 @@ const game = () => {
                     columnNumbers.push(cellNumber); //add numbers to bingo board
                     bingoTable
                         .querySelector(`#row-${j + 1}`)
-                        .querySelector(`#cell-${j + 1}-${i + 1}`).textContent = cellNumber;
+                        .querySelector(`#cell-${j + 1}-${i + 1}`).textContent =
+                        cellNumber.toString();
                     j++;
                 }
             }
@@ -186,7 +187,7 @@ const game = () => {
                 numbersCalled.unshift(numbersRemaining[0]);
                 numbersRemaining.shift();
                 numbersLeft--; //decrease numbers left to call
-                numberCalled.textContent = numbersCalled[0]; //update number called text to last number called
+                numberCalled.textContent = numbersCalled[0].toString(); //update number called text to last number called
                 timeCalled = performance.now(); //set time called to current performance time
             } else {
                 isGameStarted = false; //set is game started to false

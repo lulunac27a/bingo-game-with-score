@@ -41,7 +41,7 @@ const game = () => {
     function setTime(seconds) {
         //set time in seconds
         timeLimit = seconds; //set time limit in seconds
-        timeText.textContent = seconds; //update time text
+        timeText.textContent = seconds.toString(); //update time text
     }
     function startGame() {
         //when the start button is clicked
@@ -74,7 +74,8 @@ const game = () => {
                     columnNumbers.push(cellNumber); //add numbers to bingo board
                     bingoTable
                         .querySelector(`#row-${j + 1}`)
-                        .querySelector(`#cell-${j + 1}-${i + 1}`).textContent = cellNumber;
+                        .querySelector(`#cell-${j + 1}-${i + 1}`).textContent =
+                        cellNumber.toString();
                     j++;
                 }
             }
@@ -109,7 +110,7 @@ const game = () => {
         if (time > 0) {
             //if we still have time remaining
             time--; //decrease time remaining
-            timeText.textContent = time; //update time remaining text
+            timeText.textContent = time.toString(); //update time remaining text
         } else {
             //if time remaining is 0
             isGameStarted = false; //set is game started to false
@@ -161,7 +162,7 @@ const game = () => {
             }
         }
         lastCalled = newLastCalled; //set last called number to new last called number
-        numberCalled.textContent = lastCalled; //update number called text
+        numberCalled.textContent = lastCalled.toString(); //update number called text
     }
     function generateBingoNumber(x, y) {
         //generate bingo number based on cell position
@@ -185,7 +186,8 @@ const game = () => {
         cellsMarked[x][y] = undefined; //unmark the marked cell in bingo board
         bingoTable
             .querySelector(`#row-${y + 1}`)
-            .querySelector(`#cell-${y + 1}-${x + 1}`).textContent = numberCell; //update bingo cell text
+            .querySelector(`#cell-${y + 1}-${x + 1}`).textContent =
+            numberCell.toString(); //update bingo cell text
     }
     function checkBingos() {
         //check for bingos
