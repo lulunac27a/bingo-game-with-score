@@ -38,12 +38,12 @@ const game = () => {
             );
         }
     }
-    function setTime(seconds) {
+    const setTime = (seconds) => {
         //set time in seconds
         timeLimit = seconds; //set time limit in seconds
         timeText.textContent = seconds.toString(); //update time text
-    }
-    function startGame() {
+    };
+    const startGame = () => {
         //when the start button is clicked
         score = 0; //set score to 0
         scoreText.textContent = "0"; //update score text
@@ -84,8 +84,8 @@ const game = () => {
         }
         callNumbers(); //call numbers
         updateTimeInterval = setInterval(updateTime, 1000); //update time every second
-    }
-    function skipNumbers() {
+    };
+    const skipNumbers = () => {
         //do action when skip number button is pressed
         let cellInBoard = false; //check if the last number called is in the bingo board
         for (let i = 0; i < 5; i++) {
@@ -104,8 +104,8 @@ const game = () => {
             streak++; //increase streak by 1
             callNumbers(); //call numbers
         }
-    }
-    function updateTime() {
+    };
+    const updateTime = () => {
         //update time every second
         if (time > 0) {
             //if we still have time remaining
@@ -123,8 +123,8 @@ const game = () => {
             skipNumberButton.disabled = true; //disable skip number button
             clearInterval(updateTimeInterval); //clear update time interval
         }
-    }
-    function markCell(y, x) {
+    };
+    const markCell = (y, x) => {
         //mark cell on specified cell position
         if (isGameStarted && !isGameEnded) {
             //check if the game is started and not ended
@@ -148,8 +148,8 @@ const game = () => {
                 streak = 0; //reset streak to 0
             }
         }
-    }
-    function callNumbers() {
+    };
+    const callNumbers = () => {
         //call the next number
         let newLastCalled; //new last called number
         let sameNumber = false; //set same numbers to false
@@ -163,8 +163,8 @@ const game = () => {
         }
         lastCalled = newLastCalled; //set last called number to new last called number
         numberCalled.textContent = lastCalled.toString(); //update number called text
-    }
-    function generateBingoNumber(x, y) {
+    };
+    const generateBingoNumber = (x, y) => {
         //generate bingo number based on cell position
         let numberCell;
         let cellNumber = Math.floor(Math.random() * 15) + x * 15 + 1; //set the new bingo number based on cell position
@@ -188,8 +188,8 @@ const game = () => {
             .querySelector(`#row-${y + 1}`)
             .querySelector(`#cell-${y + 1}-${x + 1}`).textContent =
             numberCell.toString(); //update bingo cell text
-    }
-    function checkBingos() {
+    };
+    const checkBingos = () => {
         //check for bingos
         for (let i = 0; i < 5; i++) {
             //repeat for all column / row / diagonals (top-left to bottom-right and top-right to bottom-left)
@@ -258,13 +258,13 @@ const game = () => {
                 generateBingoNumber(4, 0);
             }
         }
-    }
-    function increaseScore(amount) {
+    };
+    const increaseScore = (amount) => {
         //increase score by specified amount with various multipliers
         score += Math.round(
             amount * bingoMultiplier * (1 + streak / 20) * timeMultiplier,
         );
         scoreText.textContent = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
-    }
+    };
 };
 game();

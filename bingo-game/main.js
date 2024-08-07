@@ -60,7 +60,7 @@ const game = () => {
             );
         }
     }
-    function setDifficulty(difficulty) {
+    const setDifficulty = (difficulty) => {
         //set game difficulty
         switch (difficulty) {
             case "easy": //easy difficulty
@@ -88,8 +88,8 @@ const game = () => {
                 difficultyMode = "speed-mode"; //set difficulty mode to speed mode
                 break;
         }
-    }
-    function startGame() {
+    };
+    const startGame = () => {
         //when the start button is clicked
         score = 0; //set score to 0
         comboMultiplier = 1; //set combo multiplier to 1
@@ -130,6 +130,7 @@ const game = () => {
         hardButton.disabled = true; //disable hard difficulty button
         speedButton.disabled = true; //disable speed mode difficulty button
         if (difficultyMode === "speed-mode") {
+            //if difficulty mode is speed mode
             skipNumberButton.disabled = false; //enable skip number button
         }
         freeSpaceButton.disabled = true; //disable free space button
@@ -179,8 +180,8 @@ const game = () => {
         if (difficultyMode === "speed-mode") {
             startButton.addEventListener("click", callNumbers());
         }
-    }
-    function callNumbers() {
+    };
+    const callNumbers = () => {
         if (isGameStarted && !isGameEnded) {
             if (numbersLeft > 0) {
                 //if there are numbers left to call
@@ -212,8 +213,8 @@ const game = () => {
                 increaseScoreBingo(blackoutBingoCount);
             }
         }
-    }
-    function skipNumbers() {
+    };
+    const skipNumbers = () => {
         //do action when skip number button is pressed
         if (isGameStarted && !isGameEnded) {
             //check if game is started and game is not ended
@@ -231,8 +232,8 @@ const game = () => {
                 }
             }
         }
-    }
-    function increaseScore(amount) {
+    };
+    const increaseScore = (amount) => {
         //increase score based on various multipliers
         score += Math.round(
             amount *
@@ -246,13 +247,13 @@ const game = () => {
             bingosMadeMultiplier *
             freeSpaceMultiplier,
         ); //round the score to nearest integer
-    }
-    function increaseScoreBingo(bingoNumbersCalled) {
+    };
+    const increaseScoreBingo = (bingoNumbersCalled) => {
         //increase score based on the number of bingo numbers called
         score = Math.round((score * 75) / bingoNumbersCalled); //round the score to nearest integer
         scoreText.textContent = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
-    }
-    function markCell(y, x) {
+    };
+    const markCell = (y, x) => {
         //mark cell on specified cell position
         if (isGameStarted && !isGameEnded) {
             //check if the game is started and not ended
@@ -616,8 +617,8 @@ const game = () => {
                 combo = 0;
             }
         }
-    }
-    function checkBingos() {
+    };
+    const checkBingos = () => {
         lastBingoCount = bingos;
         let rowBingos = Array(5).fill(false); //bingo rows
         let columnBingos = Array(5).fill(false); //bingo columns
@@ -725,6 +726,6 @@ const game = () => {
                     break;
             }
         }
-    }
+    };
 };
 game();
