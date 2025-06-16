@@ -50,7 +50,10 @@ const game = () => {
     easyButton.addEventListener("click", setDifficulty.bind(null, "easy"));
     mediumButton.addEventListener("click", setDifficulty.bind(null, "medium"));
     hardButton.addEventListener("click", setDifficulty.bind(null, "hard"));
-    speedButton.addEventListener("click", setDifficulty.bind(null, "speed-mode"));
+    speedButton.addEventListener(
+        "click",
+        setDifficulty.bind(null, "speed-mode"),
+    );
     skipNumberButton.addEventListener("click", skipNumbers);
     for (let row = 0; row < 5; row++) {
         for (let column = 0; column < 5; column++) {
@@ -166,7 +169,9 @@ const game = () => {
         }
         for (let i = 0; i < numbersRemaining.length; i++) {
             //repeat for each number for numbers remaining array
-            let randomIndex = Math.floor(Math.random() * numbersRemaining.length);
+            let randomIndex = Math.floor(
+                Math.random() * numbersRemaining.length,
+            );
             [numbersRemaining[i], numbersRemaining[randomIndex]] = [
                 numbersRemaining[randomIndex],
                 numbersRemaining[i],
@@ -237,15 +242,15 @@ const game = () => {
         //increase score based on various multipliers
         score += Math.round(
             amount *
-            comboMultiplier *
-            bingoMultiplier *
-            timeMultiplier *
-            (1 + streak / 10) *
-            calledBonus *
-            (1 + timeCombo / 10) *
-            difficultyMultiplier *
-            bingosMadeMultiplier *
-            freeSpaceMultiplier,
+                comboMultiplier *
+                bingoMultiplier *
+                timeMultiplier *
+                (1 + streak / 10) *
+                calledBonus *
+                (1 + timeCombo / 10) *
+                difficultyMultiplier *
+                bingosMadeMultiplier *
+                freeSpaceMultiplier,
         ); //round the score to nearest integer
     };
     const increaseScoreBingo = (bingoNumbersCalled) => {
@@ -272,7 +277,8 @@ const game = () => {
                     }
                     if (
                         (lastCalled === numbersCalled[1] ||
-                            (lastCalled === undefined && numbersCalled.length === 1)) &&
+                            (lastCalled === undefined &&
+                                numbersCalled.length === 1)) &&
                         difficultyMode !== "speed-mode"
                     ) {
                         //check if the last marked number is marked or if cell marked on the first number called and game difficulty is not speed mode
@@ -287,10 +293,13 @@ const game = () => {
                 //calculate time multiplier based on how fast the cell is marked
                 if (difficultyMode === "speed-mode") {
                     //check if difficulty mode is speed mode
-                    timeMultiplier = 1 + 1000 / (performance.now() - timeCalled + 1000); //double the time multiplier
+                    timeMultiplier =
+                        1 + 1000 / (performance.now() - timeCalled + 1000); //double the time multiplier
                 } else {
                     timeMultiplier =
-                        1 + timeBonus / (performance.now() - timeCalled + timeBonus); //set time bonus multiplier based on how fast the user marks the cell
+                        1 +
+                        timeBonus /
+                            (performance.now() - timeCalled + timeBonus); //set time bonus multiplier based on how fast the user marks the cell
                 }
                 if (calledBonus === 2) {
                     timeCombo++; //increase time combo
@@ -340,7 +349,8 @@ const game = () => {
                             //check for top-left to bottom-right diagonal
                             if (
                                 lastCalled === bingoBoard[column][column] ||
-                                lastCalled === bingoBoard[column + 1][column + 1]
+                                lastCalled ===
+                                    bingoBoard[column + 1][column + 1]
                             ) {
                                 increaseScore(250); //increase double points for diagonals
                             } else {
@@ -354,7 +364,8 @@ const game = () => {
                             //check for top-right to bottom-left diagonal
                             if (
                                 lastCalled === bingoBoard[column][4 - column] ||
-                                lastCalled === bingoBoard[column + 1][3 - column]
+                                lastCalled ===
+                                    bingoBoard[column + 1][3 - column]
                             ) {
                                 increaseScore(250);
                             } else {
@@ -401,8 +412,10 @@ const game = () => {
                         ) {
                             if (
                                 lastCalled === bingoBoard[column][column] ||
-                                lastCalled === bingoBoard[column + 1][column + 1] ||
-                                lastCalled === bingoBoard[column + 2][column + 2]
+                                lastCalled ===
+                                    bingoBoard[column + 1][column + 1] ||
+                                lastCalled ===
+                                    bingoBoard[column + 2][column + 2]
                             ) {
                                 increaseScore(500);
                             } else {
@@ -416,8 +429,10 @@ const game = () => {
                         ) {
                             if (
                                 lastCalled === bingoBoard[column][4 - column] ||
-                                lastCalled === bingoBoard[column + 1][3 - column] ||
-                                lastCalled === bingoBoard[column + 2][2 - column]
+                                lastCalled ===
+                                    bingoBoard[column + 1][3 - column] ||
+                                lastCalled ===
+                                    bingoBoard[column + 2][2 - column]
                             ) {
                                 increaseScore(500);
                             } else {
@@ -469,9 +484,12 @@ const game = () => {
                         ) {
                             if (
                                 lastCalled === bingoBoard[column][column] ||
-                                lastCalled === bingoBoard[column + 1][column + 1] ||
-                                lastCalled === bingoBoard[column + 2][column + 2] ||
-                                lastCalled === bingoBoard[column + 3][column + 3]
+                                lastCalled ===
+                                    bingoBoard[column + 1][column + 1] ||
+                                lastCalled ===
+                                    bingoBoard[column + 2][column + 2] ||
+                                lastCalled ===
+                                    bingoBoard[column + 3][column + 3]
                             ) {
                                 increaseScore(1000);
                             } else {
@@ -486,9 +504,12 @@ const game = () => {
                         ) {
                             if (
                                 lastCalled === bingoBoard[column][4 - column] ||
-                                lastCalled === bingoBoard[column + 1][3 - column] ||
-                                lastCalled === bingoBoard[column + 2][2 - column] ||
-                                lastCalled === bingoBoard[column + 3][1 - column]
+                                lastCalled ===
+                                    bingoBoard[column + 1][3 - column] ||
+                                lastCalled ===
+                                    bingoBoard[column + 2][2 - column] ||
+                                lastCalled ===
+                                    bingoBoard[column + 3][1 - column]
                             ) {
                                 increaseScore(1000);
                             } else {
@@ -585,7 +606,9 @@ const game = () => {
                     callNumbers(); //call numbers
                 }
                 if (
-                    cellsMarked.every((row) => row.every((cell) => cell !== undefined)) &&
+                    cellsMarked.every((row) =>
+                        row.every((cell) => cell !== undefined),
+                    ) &&
                     isGameStarted &&
                     !isGameEnded
                 ) {

@@ -1,15 +1,16 @@
 table,
 td {
-  /*table styles*/
-  border: 1px solid black; /*set border color to black*/
-  width: 150px; /*set height to 150 pixels*/
-  height: 25px; /*set width to 25 pixels*/
-  text-align: center; /*center text content*/
-  table-layout: fixed; /*fixed table layout*/
+    /*table styles*/
+    border: 1px solid black; /*set border color to black*/
+    width: 150px; /*set height to 150 pixels*/
+    height: 25px; /*set width to 25 pixels*/
+    text-align: center; /*center text content*/
+    table-layout: fixed; /*fixed table layout*/
 }
 
 * {
-  /*global styles*/
-  font-family: system-ui, sans-serif; /*set default font to system-based font*/
-  font-variant-numeric: tabular-nums; /*set numeric digits to tabular numbers (numerial digits with same width)*/
+    /*global styles*/
+    font-family:
+        system-ui, sans-serif; /*set default font to system-based font*/
+    font-variant-numeric: tabular-nums; /*set numeric digits to tabular numbers (numerial digits with same width)*/
 }

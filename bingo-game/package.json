@@ -1,15 +1,15 @@
 {
-  "name": "bingo-game-with-score",
-  "version": "1.9.0",
-  "description": "",
-  "main": "main.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "http-server": "^14.1.1"
-  },
-  "scripts": {
-    "start": "http-server"
-  }
+    "name": "bingo-game-with-score",
+    "version": "1.9.0",
+    "description": "",
+    "main": "main.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "http-server": "^14.1.1"
+    },
+    "scripts": {
+        "start": "http-server"
+    }
 }
