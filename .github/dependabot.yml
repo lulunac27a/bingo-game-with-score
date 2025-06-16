@@ -5,9 +5,9 @@
 
 version: 2
 updates:
-  - package-ecosystem: "npm" # See documentation for possible values
-    directories: # Location of package manifests
-      - "/bingo-game"
-      - "/endless-bingo-game"
-    schedule:
-      interval: "weekly"
+    - package-ecosystem: "npm" # See documentation for possible values
+      directories: # Location of package manifests
+          - "/bingo-game"
+          - "/endless-bingo-game"
+      schedule:
+          interval: "weekly"
