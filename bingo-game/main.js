@@ -1,6 +1,6 @@
 const game = () => {
     let score; //game score
-    let bestScore; //best game score
+    let bestScore = localStorage.getItem("bestScore") ?? 0; //best game score
     let calledBonus; //bonus for marking while calling number
     let callTime = 3000; //time to call numbers
     let timeBonus = 1000; //bonus for marking quickly before time bonus
