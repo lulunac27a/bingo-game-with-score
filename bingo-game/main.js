@@ -39,6 +39,7 @@ const game = () => {
     let startButton = document.getElementById("start-button"); //start button
     let bingoTable = document.getElementById("bingo-table"); //bingo table
     let scoreText = document.getElementById("score"); //score text
+    let bestScoreText = document.getElementById("best-score"); //best score text
     let numberCalled = document.getElementById("number-called"); //number called text
     let easyButton = document.getElementById("easy"); //easy difficulty button
     let mediumButton = document.getElementById("medium"); //medium difficulty button
