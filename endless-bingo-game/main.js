@@ -1,6 +1,6 @@
 const game = () => {
     let score; //game score
-    let bestScore; //best game score
+    let bestScore = localStorage.getItem("bestScore") ?? 0; //best game score
     let isGameStarted = false; //check if the game is started
     let isGameEnded = false; //check if the game is ended
     let lastCalled; //last called number
