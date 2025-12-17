@@ -1,5 +1,6 @@
 const game = () => {
     let score; //game score
+    let bestScore; //best game score
     let calledBonus; //bonus for marking while calling number
     let callTime = 3000; //time to call numbers
     let timeBonus = 1000; //bonus for marking quickly before time bonus
@@ -252,6 +253,12 @@ const game = () => {
                 bingosMadeMultiplier *
                 freeSpaceMultiplier,
         ); //round the score to nearest integer
+        if (score > bestScore) {
+            //if the current score is greater than the best score
+            bestScore = score; //set best score to current score
+            localStorage.setItem("bestScore", bestScore.toString());
+            bestScoreText.textContent = bestScore.toLocaleString("en-US"); //update best score text with commas as a thousand separator
+        }
     };
     const increaseScoreBingo = (bingoNumbersCalled) => {
         //increase score based on the number of bingo numbers called
