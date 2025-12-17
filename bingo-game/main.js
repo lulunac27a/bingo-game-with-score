@@ -265,6 +265,12 @@ const game = () => {
         //increase score based on the number of bingo numbers called
         score = Math.round((score * 75) / bingoNumbersCalled); //round the score to nearest integer
         scoreText.textContent = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
+        if (score > bestScore) {
+            //if the current score is greater than the best score
+            bestScore = score; //set best score to current score
+            localStorage.setItem("bestScore", bestScore.toString());
+            bestScoreText.textContent = bestScore.toLocaleString("en-US"); //update best score text with commas as a thousand separator
+        }
     };
     const markCell = (y, x) => {
         //mark cell on specified cell position
