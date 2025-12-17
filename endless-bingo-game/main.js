@@ -127,6 +127,7 @@ const game = () => {
             if (score > bestScore) {
                 //if the current score is greater than the best score
                 bestScore = score; //set best score to current score
+                localStorage.setItem("bestScore", bestScore.toString());
                 bestScoreText.textContent = bestScore.toLocaleString("en-US"); //update best score text with commas as a thousand separator
             }
         }
