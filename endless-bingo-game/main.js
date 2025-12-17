@@ -1,5 +1,6 @@
 const game = () => {
     let score; //game score
+    let bestScore; //best game score
     let isGameStarted = false; //check if the game is started
     let isGameEnded = false; //check if the game is ended
     let lastCalled; //last called number
@@ -15,6 +16,7 @@ const game = () => {
     let bingoTable = document.getElementById("bingo-table"); //bingo table
     let timeText = document.getElementById("time"); //time remaining text in seconds
     let scoreText = document.getElementById("score"); //score text
+    let bestScoreText = document.getElementById("best-score"); //best score text
     let numberCalled = document.getElementById("number-called"); //number called text
     let time60SecondsButton = document.getElementById("60-seconds"); //60-second time button
     let time120SecondsButton = document.getElementById("120-seconds"); //120-second time button
@@ -122,6 +124,11 @@ const game = () => {
             time300SecondsButton.disabled = false; //enable 300 seconds time button
             skipNumberButton.disabled = true; //disable skip number button
             clearInterval(updateTimeInterval); //clear update time interval
+            if (score > bestScore) {
+                //if the current score is greater than the best score
+                bestScore = score; //set best score to current score
+                bestScoreText.textContent = bestScore.toLocaleString("en-US"); //update best score text with commas as a thousand separator
+            }
         }
     };
     const markCell = (y, x) => {
