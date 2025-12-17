@@ -124,12 +124,6 @@ const game = () => {
             time300SecondsButton.disabled = false; //enable 300 seconds time button
             skipNumberButton.disabled = true; //disable skip number button
             clearInterval(updateTimeInterval); //clear update time interval
-            if (score > bestScore) {
-                //if the current score is greater than the best score
-                bestScore = score; //set best score to current score
-                localStorage.setItem("bestScore", bestScore.toString());
-                bestScoreText.textContent = bestScore.toLocaleString("en-US"); //update best score text with commas as a thousand separator
-            }
         }
     };
     const markCell = (y, x) => {
@@ -274,6 +268,12 @@ const game = () => {
             amount * bingoMultiplier * (1 + streak / 20) * timeMultiplier,
         );
         scoreText.textContent = score.toLocaleString("en-US"); //update score text with commas as a thousand separator
+        if (score > bestScore) {
+            //if the current score is greater than the best score
+            bestScore = score; //set best score to current score
+            localStorage.setItem("bestScore", bestScore.toString());
+            bestScoreText.textContent = bestScore.toLocaleString("en-US"); //update best score text with commas as a thousand separator
+        }
     };
 };
 game();
