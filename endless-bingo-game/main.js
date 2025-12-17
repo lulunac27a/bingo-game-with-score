@@ -1,6 +1,6 @@
 const game = () => {
     let score; //game score
-    let isGameStarted = false; //check if the game is starred
+    let isGameStarted = false; //check if the game is started
     let isGameEnded = false; //check if the game is ended
     let lastCalled; //last called number
     let bingoMultiplier; //bingo score multiplier
