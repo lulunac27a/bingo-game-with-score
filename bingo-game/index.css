@@ -12,5 +12,5 @@ td {
     /*global styles*/
     font-family:
         system-ui, sans-serif; /*set default font to system-based font*/
-    font-variant-numeric: tabular-nums; /*set numeric digits to tabular numbers (numerial digits with same width)*/
+    font-variant-numeric: tabular-nums; /*set numeric digits to tabular numbers (numeral digits with same width)*/
 }
